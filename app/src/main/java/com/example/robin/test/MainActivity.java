@@ -3,6 +3,8 @@ package com.example.robin.test;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
+import com.example.robin.controller.NineMensMorrisGame;
+
 public class MainActivity extends AppCompatActivity {
 
     @Override
@@ -10,8 +12,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        NineMensMorrisView c = new NineMensMorrisView(this);
-        setContentView(c);
+        NineMensMorrisView view = new NineMensMorrisView(this);
+        setContentView(view);
+        NineMensMorrisGame game = new NineMensMorrisGame(view);
     }
 
 

@@ -22,10 +22,11 @@ import model.Point;
  * Created by Robin on 2015-12-01.
  */
 public class NineMensMorrisView extends View {
-    Bitmap background;
-    List<Point> points = new ArrayList<>();
-    List<Checker> checkers = new ArrayList<>();
-    Checker lastTouchedChecker;
+
+    private Bitmap background;
+    private List<Point> points = new ArrayList<>();
+    private List<Checker> checkers = new ArrayList<>();
+    private Checker lastTouchedChecker;
 
     public NineMensMorrisView(Context context) {
         super(context);
@@ -229,5 +230,29 @@ public class NineMensMorrisView extends View {
         int duration = Toast.LENGTH_SHORT;
         Toast toast = Toast.makeText(context, string, duration);
         toast.show();
+    }
+
+    public List<Point> getPoints() {
+        return points;
+    }
+
+    public void setPoints(List<Point> points) {
+        this.points = points;
+    }
+
+    public List<Checker> getCheckers() {
+        return checkers;
+    }
+
+    public void setCheckers(List<Checker> checkers) {
+        this.checkers = checkers;
+    }
+
+    public Checker getLastTouchedChecker() {
+        return lastTouchedChecker;
+    }
+
+    public void setLastTouchedChecker(Checker lastTouchedChecker) {
+        this.lastTouchedChecker = lastTouchedChecker;
     }
 }
