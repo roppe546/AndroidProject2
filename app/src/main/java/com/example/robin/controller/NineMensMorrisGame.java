@@ -49,7 +49,7 @@ public class NineMensMorrisGame {
         // Get touch coordinates
         float x = event.getX();
         float y = event.getY();
-//        Toast.makeText(context, "Coordinates: x: " + x + ", y: " + y, Toast.LENGTH_SHORT).show();
+        Toast.makeText(context, "Coordinates: x: " + x + ", y: " + y, Toast.LENGTH_SHORT).show();
 
         // Add the first 9 checkers per player to the board
 //        if(checkers.size() < 18) {
@@ -58,6 +58,7 @@ public class NineMensMorrisGame {
 
         // No checker previously selected
          if (lastTouchedChecker == null) {
+
             // Find if checker was clicked
             for (Checker current : checkers) {
                 float currentX = current.getX();
@@ -75,6 +76,7 @@ public class NineMensMorrisGame {
                 }
             }
         }
+
         // A checker was previously selected
         else {
             float lastTouchedCheckerX = lastTouchedChecker.getX();
@@ -83,6 +85,7 @@ public class NineMensMorrisGame {
 
             // Check if same checker was touched again
             if ((x >= lastTouchedCheckerX - radius) && (x <= lastTouchedCheckerX + radius) && (y >= lastTouchedCheckerY - radius) && (y <= lastTouchedCheckerY + radius)) {
+
                 // Same checker was touched again, unselect it
                 Log.i("TOUCH", "Touched same checker, unselect it.");
                 lastTouchedChecker.setSelected(false);
@@ -94,6 +97,7 @@ public class NineMensMorrisGame {
 
                     float currentX = currentPoint.getX();
                     float currentY = currentPoint.getY();
+
                     // * 2 to make it easier to touch the point
                     float currentPointRadius = currentPoint.getRadius() * 2;
 
