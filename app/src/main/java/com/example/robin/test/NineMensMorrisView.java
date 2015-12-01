@@ -182,6 +182,7 @@ public class NineMensMorrisView extends View {
                     // Register checker as touched, so it will move to new position on next touch
                     lastTouchedChecker = current;
                     lastTouchedChecker.setSelected(true);
+                    
                     break;
                 }
             }
