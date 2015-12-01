@@ -51,11 +51,12 @@ public class NineMensMorrisGame {
         float y = event.getY();
 //        Toast.makeText(context, "Coordinates: x: " + x + ", y: " + y, Toast.LENGTH_SHORT).show();
 
-        // Add the first 9 checkers per player to the board
+        // Phase 1: Placing pieces
         if(turn < 18) {
             addMarkerToBoard(x, y);
         }
 
+        // Phase 2: Moving pieces
         // No checker previously selected
          else if (lastTouchedChecker == null) {
 
@@ -124,7 +125,6 @@ public class NineMensMorrisGame {
         if(p == null)
             return;
 
-
         boolean isLegal = rules.legalMove(p.getNumber(), -1, rules.getTurn());
         if(isLegal) {
             checkers.add(new Checker(p.getX(), p.getY(), 50, getTurn()));
@@ -154,7 +154,6 @@ public class NineMensMorrisGame {
                 break;
             }
         }
-
         return returnPoint;
     }
 
@@ -164,9 +163,7 @@ public class NineMensMorrisGame {
 
         if(intTurn == NineMenMorrisRules.BLUE_MOVES)
             return Color.BLUE;
-        else if(intTurn == NineMenMorrisRules.RED_MOVES)
-            return Color.RED;
 
-        return Color.YELLOW;
+        return Color.RED;
     }
 }
