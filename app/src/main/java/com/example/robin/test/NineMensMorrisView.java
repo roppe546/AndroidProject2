@@ -15,8 +15,9 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
-import model.Checker;
-import model.Point;
+import com.example.robin.controller.NineMensMorrisGame;
+import com.example.robin.model.Checker;
+import com.example.robin.model.Point;
 
 /**
  * Created by Robin on 2015-12-01.
@@ -27,9 +28,11 @@ public class NineMensMorrisView extends View {
     private List<Point> points = new ArrayList<>();
     private List<Checker> checkers = new ArrayList<>();
     private Checker lastTouchedChecker;
+    private NineMensMorrisGame game;
 
-    public NineMensMorrisView(Context context) {
+    public NineMensMorrisView(Context context, NineMensMorrisGame game) {
         super(context);
+        this.game = game;
 
         background = BitmapFactory.decodeResource(context.getResources(), R.drawable.background);
 
@@ -42,6 +45,7 @@ public class NineMensMorrisView extends View {
         checkers.add(new Checker(200f, 200f, 50, Color.RED));
         checkers.add(new Checker(200f, 500f, 50, Color.BLUE));
         checkers.add(new Checker(100f, 500f, 50, Color.RED));
+        game.init(lastTouchedChecker, checkers, points);
     }
 
     private void createPoints() {
@@ -156,69 +160,76 @@ public class NineMensMorrisView extends View {
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        // TODO: Move to methods, possibly in model classes
+        // TODO: Move to methods, possibly in com.example.robin.model classes
 
-        // Get touch coordinates
-        float x = event.getX();
-        float y = event.getY();
+        game.newEvent(event);
+//
+//        // Get touch coordinates
+//        float x = event.getX();
+//        float y = event.getY();
 //        showToast("Coordinates: x: " + x + ", y: " + y);
-
-        // No checker previously selected
-        if (lastTouchedChecker == null) {
-            // Find if checker was clicked
-            for (Checker current : checkers) {
-                float currentX = current.getX();
-                float currentY = current.getY();
-                float radius = current.getRadius();
-
-                if ((x >= currentX - radius) && (x <= currentX + radius) && (y >= currentY - radius) && (y <= currentY + radius)) {
-                    Log.i("TOUCH", "Touched checker.");
-
-                    // Register checker as touched, so it will move to new position on next touch
-                    lastTouchedChecker = current;
-                    lastTouchedChecker.setSelected(true);
-
-                    break;
-                }
-            }
-        }
-        // A checker was previously selected
-        else {
-            float lastTouchedCheckerX = lastTouchedChecker.getX();
-            float lastTouchedCheckerY = lastTouchedChecker.getY();
-            float radius = lastTouchedChecker.getRadius();
-
-            // Check if same checker was touched again
-            if ((x >= lastTouchedCheckerX - radius) && (x <= lastTouchedCheckerX + radius) && (y >= lastTouchedCheckerY - radius) && (y <= lastTouchedCheckerY + radius)) {
-                // Same checker was touched again, unselect it
-                Log.i("TOUCH", "Touched same checker, unselect it.");
-                lastTouchedChecker.setSelected(false);
-                lastTouchedChecker = null;
-            }
-            else {
-                // Move checker to point
-                for (Point currentPoint : points) {
-
-                    float currentX = currentPoint.getX();
-                    float currentY = currentPoint.getY();
-                    // * 2 to make it easier to touch the point
-                    float currentPointRadius = currentPoint.getRadius() * 2;
-
-                    if ((x >= currentX - currentPointRadius) && (x <= currentX + currentPointRadius) && (y >= currentY - currentPointRadius) && (y <= currentY + currentPointRadius)) {
-                        Log.i("TOUCH", "Moved checker to new point");
-
-                        lastTouchedChecker.setX(currentX);
-                        lastTouchedChecker.setY(currentY);
-
-                        break;
-                    }
-                }
-
-                // Unselect checker
-                lastTouchedChecker.setSelected(false);
-                lastTouchedChecker = null;
-            }
-        }
+//
+//        // Add the first 9 checkers per player to the board
+//        if(checkers.size() < 18) {
+//
+//        }
+//
+//        // No checker previously selected
+//        else if (lastTouchedChecker == null) {
+//            // Find if checker was clicked
+//            for (Checker current : checkers) {
+//                float currentX = current.getX();
+//                float currentY = current.getY();
+//                float radius = current.getRadius();
+//
+//                if ((x >= currentX - radius) && (x <= currentX + radius) && (y >= currentY - radius) && (y <= currentY + radius)) {
+//                    Log.i("TOUCH", "Touched checker.");
+//
+//                    // Register checker as touched, so it will move to new position on next touch
+//                    lastTouchedChecker = current;
+//                    lastTouchedChecker.setSelected(true);
+//
+//                    break;
+//                }
+//            }
+//        }
+//        // A checker was previously selected
+//        else {
+//            float lastTouchedCheckerX = lastTouchedChecker.getX();
+//            float lastTouchedCheckerY = lastTouchedChecker.getY();
+//            float radius = lastTouchedChecker.getRadius();
+//
+//            // Check if same checker was touched again
+//            if ((x >= lastTouchedCheckerX - radius) && (x <= lastTouchedCheckerX + radius) && (y >= lastTouchedCheckerY - radius) && (y <= lastTouchedCheckerY + radius)) {
+//                // Same checker was touched again, unselect it
+//                Log.i("TOUCH", "Touched same checker, unselect it.");
+//                lastTouchedChecker.setSelected(false);
+//                lastTouchedChecker = null;
+//            }
+//            else {
+//                // Move checker to point
+//                for (Point currentPoint : points) {
+//
+//                    float currentX = currentPoint.getX();
+//                    float currentY = currentPoint.getY();
+//                    // * 2 to make it easier to touch the point
+//                    float currentPointRadius = currentPoint.getRadius() * 2;
+//
+//                    if ((x >= currentX - currentPointRadius) && (x <= currentX + currentPointRadius) && (y >= currentY - currentPointRadius) && (y <= currentY + currentPointRadius)) {
+//                        Log.i("TOUCH", "Moved checker to new point");
+//
+//                        lastTouchedChecker.setX(currentX);
+//                        lastTouchedChecker.setY(currentY);
+//
+//                        break;
+//                    }
+//                }
+//
+//                // Unselect checker
+//                lastTouchedChecker.setSelected(false);
+//                lastTouchedChecker = null;
+//            }
+//        }
 
         // Invalidate to redraw view
         invalidate();

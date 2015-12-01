@@ -1,4 +1,4 @@
-package model;
+package com.example.robin.model;
 
 import android.graphics.Paint;
 

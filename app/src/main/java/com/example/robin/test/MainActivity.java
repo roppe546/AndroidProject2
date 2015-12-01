@@ -10,12 +10,13 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
 
-        NineMensMorrisView view = new NineMensMorrisView(this);
+        NineMensMorrisView view = null;
+        NineMensMorrisGame game = null;
+
+        game = new NineMensMorrisGame(this, view);
+        view = new NineMensMorrisView(this, game);
+
         setContentView(view);
-        NineMensMorrisGame game = new NineMensMorrisGame(view);
     }
-
-
 }

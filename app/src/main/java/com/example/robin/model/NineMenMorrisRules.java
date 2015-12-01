@@ -1,4 +1,4 @@
-package model;
+package com.example.robin.model;
 
 /**
  * @author Jonas W�hsl�n, jwi@kth.se. 
