@@ -56,6 +56,8 @@ public class NineMensMorrisView extends View {
         int x1 = 150;
         int y1 = 150;
 
+        int number = 1;
+
         for (int i = 0; i < 8; i++) {
             int factor = 1;
             for (int j = 0; j < 3; j++) {
@@ -85,6 +87,7 @@ public class NineMensMorrisView extends View {
                     points.add(new Point(x - x1 * factor, y));
                 }
 
+                points.get(number - 1).setNumber(number++);
                 factor += 1;
             }
         }
@@ -96,7 +99,7 @@ public class NineMensMorrisView extends View {
 
         canvas.drawBitmap(background, 0, 0, null);
 
-
+        int i = 0;
         // Draw points on board
         for (Point currentPoint : points) {
             float x = currentPoint.getX();
@@ -104,7 +107,11 @@ public class NineMensMorrisView extends View {
             float radius = currentPoint.getRadius();
             Paint checkerPaint = currentPoint.getPaint();
 
-            canvas.drawCircle(x, y, radius, checkerPaint);
+//            canvas.drawCircle(x, y, radius, checkerPaint);
+
+            //bugfixing
+            checkerPaint.setTextSize(100);
+            canvas.drawText(String.valueOf(i++), x, y, checkerPaint);
         }
 
 

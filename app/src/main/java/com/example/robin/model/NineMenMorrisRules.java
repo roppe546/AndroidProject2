@@ -243,4 +243,13 @@ public class NineMenMorrisRules {
 		}
 		return false;
 	}
+
+
+	public int getTurn() {
+		return turn;
+	}
+
+	public void setTurn(int turn) {
+		this.turn = turn;
+	}
 }

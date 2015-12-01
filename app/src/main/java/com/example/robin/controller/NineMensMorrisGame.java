@@ -32,6 +32,8 @@ public class NineMensMorrisGame {
     private List<Checker> checkers;
     private List <Point> points;
 
+    private int turn = 0;
+
     public NineMensMorrisGame(Context context, NineMensMorrisView view) {
         this.context = context;
         this.view = view;
@@ -49,15 +51,15 @@ public class NineMensMorrisGame {
         // Get touch coordinates
         float x = event.getX();
         float y = event.getY();
-        Toast.makeText(context, "Coordinates: x: " + x + ", y: " + y, Toast.LENGTH_SHORT).show();
+//        Toast.makeText(context, "Coordinates: x: " + x + ", y: " + y, Toast.LENGTH_SHORT).show();
 
         // Add the first 9 checkers per player to the board
-//        if(checkers.size() < 18) {
-//
-//        }
+        if(turn < 18) {
+            addMarkerToBoard(x, y);
+        }
 
         // No checker previously selected
-         if (lastTouchedChecker == null) {
+         else if (lastTouchedChecker == null) {
 
             // Find if checker was clicked
             for (Checker current : checkers) {
@@ -118,45 +120,36 @@ public class NineMensMorrisGame {
         }
     }
 
-    private void createPoints() {
-        //TODO: Remove hardcoding and base x, y on screen size instead
-        int x = 500;
-        int y = 500;
+    private void addMarkerToBoard(float x, float y) {
 
-        int x1 = 150;
-        int y1 = 150;
+        for(Point p: points) {
 
-        for (int i = 0; i < 8; i++) {
-            int factor = 1;
-            for (int j = 0; j < 3; j++) {
-                if (i == 0) {
-                    points.add(new Point(x - x1 * factor, y - y1 * factor));
-                }
-                else if (i == 1) {
-                    points.add(new Point(x, y - y1 * factor));
-                }
-                else if (i == 2) {
-                    points.add(new Point(x + x1 * factor, y - y1 * factor));
-                }
-                else if (i == 3) {
-                    points.add(new Point(x + x1 * factor, y));
-                }
-                else if (i == 4) {
-                    points.add(new Point(x + x1 * factor, y + y1 * factor));
-                }
-                else if (i == 5) {
-                    points.add(new Point(x, y + y1 * factor));
-                }
-                else if (i == 6) {
-                    points.add(new Point(x - x1 * factor, y + y1 * factor));
-                }
-                // i == 7
-                else {
-                    points.add(new Point(x - x1 * factor, y));
-                }
+            float currentPointRadius = p.getRadius() * 2;
+            float currentX = p.getX();
+            float currentY = p.getY();
 
-                factor += 1;
+            if ((x >= currentX - currentPointRadius) && (x <= currentX + currentPointRadius) && (y >= currentY - currentPointRadius) && (y <= currentY + currentPointRadius)) {
+
+                boolean isLegal = rules.legalMove(p.getNumber(), -1, rules.getTurn());
+                if(isLegal) {
+                    checkers.add(new Checker(currentX, currentY, 50, getTurn()));
+                    Toast.makeText(context, String.valueOf(p.getNumber()), Toast.LENGTH_SHORT).show();
+                    turn++;
+                }
+                break;
             }
         }
+    }
+
+    private int getTurn() {
+
+        int intTurn = rules.getTurn();
+
+        if(intTurn == NineMenMorrisRules.BLUE_MOVES)
+            return Color.BLUE;
+        else if(intTurn == NineMenMorrisRules.RED_MOVES)
+            return Color.RED;
+
+        return Color.YELLOW;
     }
 }

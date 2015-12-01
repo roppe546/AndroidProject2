@@ -13,6 +13,7 @@ public class Point {
     private final float y;
     private final float radius;
     private Paint paint;
+    private int number;
 
     public Point(float x, float y) {
         this.x = x;
@@ -41,5 +42,13 @@ public class Point {
 
     public void setPaint(Paint paint) {
         this.paint = paint;
+    }
+
+    public int getNumber() {
+        return number;
+    }
+
+    public void setNumber(int number) {
+        this.number = number;
     }
 }
