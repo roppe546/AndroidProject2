@@ -56,37 +56,31 @@ public class NineMensMorrisView extends View {
             for (int j = 0; j < 3; j++) {
                 if (i == 0) {
                     points.add(new Point(x - x1 * factor, y - y1 * factor));
-                    factor += 1;
                 }
                 else if (i == 1) {
                     points.add(new Point(x, y - y1 * factor));
-                    factor += 1;
                 }
                 else if (i == 2) {
                     points.add(new Point(x + x1 * factor, y - y1 * factor));
-                    factor += 1;
                 }
                 else if (i == 3) {
                     points.add(new Point(x + x1 * factor, y));
-                    factor += 1;
                 }
                 else if (i == 4) {
                     points.add(new Point(x + x1 * factor, y + y1 * factor));
-                    factor += 1;
                 }
                 else if (i == 5) {
                     points.add(new Point(x, y + y1 * factor));
-                    factor += 1;
                 }
                 else if (i == 6) {
                     points.add(new Point(x - x1 * factor, y + y1 * factor));
-                    factor += 1;
                 }
                 // i == 7
                 else {
                     points.add(new Point(x - x1 * factor, y));
-                    factor += 1;
                 }
+
+                factor += 1;
             }
         }
     }
@@ -182,7 +176,7 @@ public class NineMensMorrisView extends View {
                     // Register checker as touched, so it will move to new position on next touch
                     lastTouchedChecker = current;
                     lastTouchedChecker.setSelected(true);
-                    
+
                     break;
                 }
             }
