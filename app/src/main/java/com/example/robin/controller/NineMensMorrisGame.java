@@ -4,7 +4,6 @@ import android.content.Context;
 import android.graphics.Color;
 import android.util.Log;
 import android.view.MotionEvent;
-import android.widget.Toast;
 
 import com.example.robin.model.Checker;
 import com.example.robin.model.Point;
@@ -12,7 +11,6 @@ import com.example.robin.test.NineMensMorrisView;
 
 import com.example.robin.model.NineMenMorrisRules;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -122,6 +120,29 @@ public class NineMensMorrisGame {
 
     private void addMarkerToBoard(float x, float y) {
 
+        Point p = getPoint(x, y);
+        if(p == null)
+            return;
+
+
+        boolean isLegal = rules.legalMove(p.getNumber(), -1, rules.getTurn());
+        if(isLegal) {
+            checkers.add(new Checker(p.getX(), p.getY(), 50, getTurn()));
+            turn++;
+        }
+
+        //TODO implement mill logic, have to create states if we are adding a marker or removing a marker.
+        boolean isRemove = rules.remove(p.getNumber());
+        if(isRemove) {
+//            rules.remove(getPoint().getNumber(), getTurn());
+        }
+        System.out.println("isRemove: " + isRemove);
+    }
+
+    private Point getPoint(float x, float y) {
+
+        Point returnPoint = null;
+
         for(Point p: points) {
 
             float currentPointRadius = p.getRadius() * 2;
@@ -129,16 +150,12 @@ public class NineMensMorrisGame {
             float currentY = p.getY();
 
             if ((x >= currentX - currentPointRadius) && (x <= currentX + currentPointRadius) && (y >= currentY - currentPointRadius) && (y <= currentY + currentPointRadius)) {
-
-                boolean isLegal = rules.legalMove(p.getNumber(), -1, rules.getTurn());
-                if(isLegal) {
-                    checkers.add(new Checker(currentX, currentY, 50, getTurn()));
-                    Toast.makeText(context, String.valueOf(p.getNumber()), Toast.LENGTH_SHORT).show();
-                    turn++;
-                }
+                returnPoint = p;
                 break;
             }
         }
+
+        return returnPoint;
     }
 
     private int getTurn() {

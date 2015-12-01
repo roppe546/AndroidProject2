@@ -161,7 +161,7 @@ public class NineMenMorrisRules {
 	}
 
 	/**
-	 *  Returns true if the selected player have less than three markerss left.
+	 *  Returns true if the selected player have less than three markers left.
 	 */
 	public boolean win(int color) {
 		int countMarker = 0;

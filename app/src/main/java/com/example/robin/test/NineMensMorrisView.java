@@ -41,10 +41,10 @@ public class NineMensMorrisView extends View {
 
         // TODO: Fix later
         // Add checkers
-        checkers.add(new Checker(100f, 100f, 50, Color.BLUE));
-        checkers.add(new Checker(200f, 200f, 50, Color.RED));
-        checkers.add(new Checker(200f, 500f, 50, Color.BLUE));
-        checkers.add(new Checker(100f, 500f, 50, Color.RED));
+//        checkers.add(new Checker(100f, 100f, 50, Color.BLUE));
+//        checkers.add(new Checker(200f, 200f, 50, Color.RED));
+//        checkers.add(new Checker(200f, 500f, 50, Color.BLUE));
+//        checkers.add(new Checker(100f, 500f, 50, Color.RED));
         game.init(lastTouchedChecker, checkers, points);
     }
 
@@ -107,11 +107,11 @@ public class NineMensMorrisView extends View {
             float radius = currentPoint.getRadius();
             Paint checkerPaint = currentPoint.getPaint();
 
-//            canvas.drawCircle(x, y, radius, checkerPaint);
+            canvas.drawCircle(x, y, radius, checkerPaint);
 
             //bugfixing
-            checkerPaint.setTextSize(100);
-            canvas.drawText(String.valueOf(i++), x, y, checkerPaint);
+//            checkerPaint.setTextSize(75);
+//            canvas.drawText(String.valueOf(i++), x, y, checkerPaint);
         }
 
 
