@@ -163,6 +163,18 @@ public class NineMensMorrisView extends View {
         canvas.drawLine(points.get(18).getX(), points.get(18).getY(), points.get(20).getX(), points.get(20).getY(), paint);
         canvas.drawLine(points.get(21).getX(), points.get(21).getY(), points.get(23).getX(), points.get(23).getY(), paint);
 
+        // Put checkers in correct positions
+        for (Checker currentChecker : checkers) {
+            // Find which point the checker is on
+            Point checkerPoint = points.get(currentChecker.getOnPoint() - 1);
+            float pointX = checkerPoint.getX();
+            float pointY = checkerPoint.getY();
+
+            currentChecker.setX(pointX);
+            currentChecker.setY(pointY);
+        }
+        game.setCheckers(checkers);
+
         // Draw checkers
         for (Checker currentChecker : checkers) {
             float x = currentChecker.getX();

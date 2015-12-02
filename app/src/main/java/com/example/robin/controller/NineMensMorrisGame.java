@@ -46,6 +46,8 @@ public class NineMensMorrisGame {
         this.points = points;
     }
 
+    // TODO: make game.newEvent return true or false, if it returns true, that means something changed, so we can invalidate,
+    // TODO: don't invalidate if false. this to not do uneccesary redraws on every click
     public void newEvent(MotionEvent event) {
 
         // Get touch coordinates
@@ -122,7 +124,6 @@ public class NineMensMorrisGame {
     }
 
     private void addMarkerToBoard(float x, float y) {
-
         Point p = getPoint(x, y);
         if(p == null)
             return;
@@ -142,7 +143,9 @@ public class NineMensMorrisGame {
 
         boolean isLegal = rules.legalMove(p.getNumber(), 0, rules.getTurn());
         if(isLegal) {
-            checkers.add(new Checker(p.getX(), p.getY(), 50, getTurn()));
+            Checker newChecker = new Checker(p.getX(), p.getY(), 50, getTurn());
+            newChecker.setOnPoint(p.getNumber());
+            checkers.add(newChecker);
             System.out.println("Checkers size: " + checkers.size());
             turn++;
         }
@@ -195,5 +198,9 @@ public class NineMensMorrisGame {
             return Color.BLUE;
 
         return Color.RED;
+    }
+
+    public void setCheckers(List<Checker> checkers) {
+        this.checkers = checkers;
     }
 }
