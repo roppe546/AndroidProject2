@@ -1,18 +1,21 @@
 package com.example.robin.model;
 
 import android.graphics.Paint;
+import android.os.Parcel;
+import android.os.Parcelable;
 
 /**
  * This class represents a man (checker) in the Nine Men's Morris game.
  *
  * Created by Robin on 2015-12-01.
  */
-public class Checker {
+public class Checker implements Parcelable {
     private float x;
     private float y;
     private float radius;
     private Paint paint;
     private boolean selected;
+    private int onPoint;
 
     public Checker() {
     }
@@ -25,6 +28,29 @@ public class Checker {
         this.paint.setColor(color);
         this.paint.setStyle(Paint.Style.FILL);
         this.selected = false;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeFloat(this.x);
+        dest.writeFloat(this.y);
+        dest.writeFloat(this.radius);
+        dest.writeInt(this.paint.getColor());
+
+        if (selected) {
+            dest.writeBooleanArray(new boolean[1]);
+        }
+        else {
+            dest.writeBooleanArray(new boolean[0]);
+        }
+
+        dest.writeInt(this.onPoint);
+
     }
 
     public float getX() {
@@ -65,5 +91,13 @@ public class Checker {
 
     public void setSelected(boolean selected) {
         this.selected = selected;
+    }
+
+    public int getOnPoint() {
+        return onPoint;
+    }
+
+    public void setOnPoint(int onPoint) {
+        this.onPoint = onPoint;
     }
 }

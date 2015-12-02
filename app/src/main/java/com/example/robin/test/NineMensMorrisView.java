@@ -1,17 +1,24 @@
 package com.example.robin.test;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
+import android.graphics.drawable.GradientDrawable;
+import android.support.v7.widget.LinearLayoutCompat;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Toast;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,7 +33,7 @@ public class NineMensMorrisView extends View {
 
     private Bitmap background;
     private List<Point> points = new ArrayList<>();
-    private List<Checker> checkers = new ArrayList<>();
+    private ArrayList<Checker> checkers = new ArrayList<>();
     private Checker lastTouchedChecker;
     private NineMensMorrisGame game;
 
@@ -35,9 +42,6 @@ public class NineMensMorrisView extends View {
         this.game = game;
 
         background = BitmapFactory.decodeResource(context.getResources(), R.drawable.background);
-
-        // Create board points
-        createPoints();
 
         // TODO: Fix later
         // Add checkers
@@ -49,12 +53,26 @@ public class NineMensMorrisView extends View {
     }
 
     private void createPoints() {
-        //TODO: Remove hardcoding and base x, y on screen size instead
-        int x = 500;
-        int y = 500;
+        int screenWidth = this.getWidth();
+        int screenHeight = this.getHeight();
+        int x, y, x1, y1;
 
-        int x1 = 150;
-        int y1 = 150;
+        Configuration config = getResources().getConfiguration();
+
+        if (config.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            x = screenWidth / 2;
+            y = screenHeight / 2;
+
+            x1 = screenWidth / 14;
+            y1 = screenWidth / 14;
+        }
+        else {
+            x = screenWidth / 2;
+            y = screenHeight / 2;
+
+            x1 = screenWidth / 8;
+            y1 = screenWidth / 8;
+        }
 
         int number = 1;
 
@@ -99,6 +117,9 @@ public class NineMensMorrisView extends View {
 
         canvas.drawBitmap(background, 0, 0, null);
 
+        // Create board points
+        createPoints();
+
         int i = 0;
         // Draw points on board
         for (Point currentPoint : points) {
@@ -112,6 +133,10 @@ public class NineMensMorrisView extends View {
             //bugfixing
 //            checkerPaint.setTextSize(75);
 //            canvas.drawText(String.valueOf(i++), x, y, checkerPaint);
+        }
+
+        for (Point currentPoint : points) {
+
         }
 
 
@@ -167,76 +192,7 @@ public class NineMensMorrisView extends View {
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        // TODO: Move to methods, possibly in com.example.robin.model classes
-
         game.newEvent(event);
-//
-//        // Get touch coordinates
-//        float x = event.getX();
-//        float y = event.getY();
-//        showToast("Coordinates: x: " + x + ", y: " + y);
-//
-//        // Add the first 9 checkers per player to the board
-//        if(checkers.size() < 18) {
-//
-//        }
-//
-//        // No checker previously selected
-//        else if (lastTouchedChecker == null) {
-//            // Find if checker was clicked
-//            for (Checker current : checkers) {
-//                float currentX = current.getX();
-//                float currentY = current.getY();
-//                float radius = current.getRadius();
-//
-//                if ((x >= currentX - radius) && (x <= currentX + radius) && (y >= currentY - radius) && (y <= currentY + radius)) {
-//                    Log.i("TOUCH", "Touched checker.");
-//
-//                    // Register checker as touched, so it will move to new position on next touch
-//                    lastTouchedChecker = current;
-//                    lastTouchedChecker.setSelected(true);
-//
-//                    break;
-//                }
-//            }
-//        }
-//        // A checker was previously selected
-//        else {
-//            float lastTouchedCheckerX = lastTouchedChecker.getX();
-//            float lastTouchedCheckerY = lastTouchedChecker.getY();
-//            float radius = lastTouchedChecker.getRadius();
-//
-//            // Check if same checker was touched again
-//            if ((x >= lastTouchedCheckerX - radius) && (x <= lastTouchedCheckerX + radius) && (y >= lastTouchedCheckerY - radius) && (y <= lastTouchedCheckerY + radius)) {
-//                // Same checker was touched again, unselect it
-//                Log.i("TOUCH", "Touched same checker, unselect it.");
-//                lastTouchedChecker.setSelected(false);
-//                lastTouchedChecker = null;
-//            }
-//            else {
-//                // Move checker to point
-//                for (Point currentPoint : points) {
-//
-//                    float currentX = currentPoint.getX();
-//                    float currentY = currentPoint.getY();
-//                    // * 2 to make it easier to touch the point
-//                    float currentPointRadius = currentPoint.getRadius() * 2;
-//
-//                    if ((x >= currentX - currentPointRadius) && (x <= currentX + currentPointRadius) && (y >= currentY - currentPointRadius) && (y <= currentY + currentPointRadius)) {
-//                        Log.i("TOUCH", "Moved checker to new point");
-//
-//                        lastTouchedChecker.setX(currentX);
-//                        lastTouchedChecker.setY(currentY);
-//
-//                        break;
-//                    }
-//                }
-//
-//                // Unselect checker
-//                lastTouchedChecker.setSelected(false);
-//                lastTouchedChecker = null;
-//            }
-//        }
 
         // Invalidate to redraw view
         invalidate();
@@ -258,11 +214,11 @@ public class NineMensMorrisView extends View {
         this.points = points;
     }
 
-    public List<Checker> getCheckers() {
+    public ArrayList<Checker> getCheckers() {
         return checkers;
     }
 
-    public void setCheckers(List<Checker> checkers) {
+    public void setCheckers(ArrayList<Checker> checkers) {
         this.checkers = checkers;
     }
 

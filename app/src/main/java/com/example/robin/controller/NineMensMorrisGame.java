@@ -51,6 +51,7 @@ public class NineMensMorrisGame {
         // Get touch coordinates
         float x = event.getX();
         float y = event.getY();
+//        Toast.makeText(context, "Coordinates: x: " + x + ", y: " + y, Toast.LENGTH_SHORT).show();
 
         // Phase 1: Placing pieces
         if(turn < 18) {
@@ -73,6 +74,7 @@ public class NineMensMorrisGame {
                     // Register checker as touched, so it will move to new position on next touch
                     lastTouchedChecker = current;
                     lastTouchedChecker.setSelected(true);
+
                     break;
                 }
             }
@@ -110,6 +112,8 @@ public class NineMensMorrisGame {
                     // Unselect checker
                     lastTouchedChecker.setSelected(false);
                     lastTouchedChecker = null;
+                    lastTouchedChecker.setOnPoint(currentPoint.getNumber());
+
                 }
             }
         }
