@@ -30,6 +30,8 @@ public class NineMensMorrisGame {
     private List<Checker> checkers;
     private List <Point> points;
 
+    private boolean removeChecker = false;
+
     private int turn = 0;
 
     public NineMensMorrisGame(Context context, NineMensMorrisView view) {
@@ -49,7 +51,6 @@ public class NineMensMorrisGame {
         // Get touch coordinates
         float x = event.getX();
         float y = event.getY();
-//        Toast.makeText(context, "Coordinates: x: " + x + ", y: " + y, Toast.LENGTH_SHORT).show();
 
         // Phase 1: Placing pieces
         if(turn < 18) {
@@ -125,6 +126,19 @@ public class NineMensMorrisGame {
         if(p == null)
             return;
 
+        if(removeChecker) {
+
+            boolean isLegalRemove = rules.remove(p.getNumber(), rules.getTurn() + 3);
+            System.out.println("isLegalRemove: " + isLegalRemove);
+            if(isLegalRemove) {
+                System.out.println("GOT FUCKINGH ERE DIE");
+                int index = getCheckerOnPoint(p);
+                checkers.remove(index);
+                removeChecker = false;
+                return;
+            }
+        }
+
         boolean isLegal = rules.legalMove(p.getNumber(), -1, rules.getTurn());
         if(isLegal) {
             checkers.add(new Checker(p.getX(), p.getY(), 50, getTurn()));
@@ -133,10 +147,10 @@ public class NineMensMorrisGame {
 
         //TODO implement mill logic, have to create states if we are adding a marker or removing a marker.
         boolean isRemove = rules.remove(p.getNumber());
-        if(isRemove) {
-//            rules.remove(getPoint().getNumber(), getTurn());
-        }
         System.out.println("isRemove: " + isRemove);
+        if(isRemove) {
+            removeChecker = true;
+        }
     }
 
     private Point getPoint(float x, float y) {
@@ -155,6 +169,20 @@ public class NineMensMorrisGame {
             }
         }
         return returnPoint;
+    }
+
+    private int getCheckerOnPoint(Point point) {
+
+        int returnIndex = 0;
+        for (int i = 0; i < checkers.size(); i++) {
+            if(point.getX() == checkers.get(i).getX() && point.getY() == checkers.get(i).getY()) {
+                System.out.println("getCheckerOnPoint found match!");
+                returnIndex = i;
+                break;
+            }
+        }
+
+        return returnIndex;
     }
 
     private int getTurn() {
