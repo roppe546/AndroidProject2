@@ -111,8 +111,10 @@ public class NineMensMorrisGame {
 
                     // Unselect checker
                     lastTouchedChecker.setSelected(false);
+                    lastTouchedChecker.setOnPoint(pointTo.getNumber());
                     lastTouchedChecker = null;
-                    lastTouchedChecker.setOnPoint(currentPoint.getNumber());
+
+                    System.out.println("moved to: " + pointTo.getNumber());
 
                 }
             }
@@ -141,6 +143,7 @@ public class NineMensMorrisGame {
         boolean isLegal = rules.legalMove(p.getNumber(), 0, rules.getTurn());
         if(isLegal) {
             checkers.add(new Checker(p.getX(), p.getY(), 50, getTurn()));
+            System.out.println("Checkers size: " + checkers.size());
             turn++;
         }
 

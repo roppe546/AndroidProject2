@@ -135,11 +135,6 @@ public class NineMensMorrisView extends View {
 //            canvas.drawText(String.valueOf(i++), x, y, checkerPaint);
         }
 
-        for (Point currentPoint : points) {
-
-        }
-
-
         // Draw rectangles on board
         Rect outer = new Rect();
         outer.set((int) points.get(2).getX(), (int) points.get(2).getY(), (int) points.get(14).getX(), (int) points.get(14).getY());
@@ -168,7 +163,6 @@ public class NineMensMorrisView extends View {
         canvas.drawLine(points.get(18).getX(), points.get(18).getY(), points.get(20).getX(), points.get(20).getY(), paint);
         canvas.drawLine(points.get(21).getX(), points.get(21).getY(), points.get(23).getX(), points.get(23).getY(), paint);
 
-
         // Draw checkers
         for (Checker currentChecker : checkers) {
             float x = currentChecker.getX();
@@ -194,6 +188,7 @@ public class NineMensMorrisView extends View {
     public boolean onTouchEvent(MotionEvent event) {
         game.newEvent(event);
 
+        // TODO: make game.newEvent return true or false, if it returns true, that means something changed, so invalidate, don't invalidate if false
         // Invalidate to redraw view
         invalidate();
         return super.onTouchEvent(event);
