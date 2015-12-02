@@ -73,7 +73,6 @@ public class NineMensMorrisGame {
                     // Register checker as touched, so it will move to new position on next touch
                     lastTouchedChecker = current;
                     lastTouchedChecker.setSelected(true);
-
                     break;
                 }
             }
@@ -93,29 +92,22 @@ public class NineMensMorrisGame {
                 lastTouchedChecker.setSelected(false);
                 lastTouchedChecker = null;
             }
+
+            // Move checker to point
             else {
-                // Move checker to point
-                for (Point currentPoint : points) {
+                Point pointTo = getPoint(x, y);
+                Point pointFrom = getPoint(lastTouchedCheckerX, lastTouchedCheckerY);
 
-                    float currentX = currentPoint.getX();
-                    float currentY = currentPoint.getY();
+                boolean isLegal = rules.legalMove(pointTo.getNumber(), pointFrom.getNumber(), rules.getTurn());
+                System.out.println("isLegal: " + isLegal);
+                if(isLegal) {
+                    lastTouchedChecker.setX(pointTo.getX());
+                    lastTouchedChecker.setY(pointTo.getY());
 
-                    // * 2 to make it easier to touch the point
-                    float currentPointRadius = currentPoint.getRadius() * 2;
-
-                    if ((x >= currentX - currentPointRadius) && (x <= currentX + currentPointRadius) && (y >= currentY - currentPointRadius) && (y <= currentY + currentPointRadius)) {
-                        Log.i("TOUCH", "Moved checker to new point");
-
-                        lastTouchedChecker.setX(currentX);
-                        lastTouchedChecker.setY(currentY);
-
-                        break;
-                    }
+                    // Unselect checker
+                    lastTouchedChecker.setSelected(false);
+                    lastTouchedChecker = null;
                 }
-
-                // Unselect checker
-                lastTouchedChecker.setSelected(false);
-                lastTouchedChecker = null;
             }
         }
     }
@@ -139,7 +131,7 @@ public class NineMensMorrisGame {
             }
         }
 
-        boolean isLegal = rules.legalMove(p.getNumber(), -1, rules.getTurn());
+        boolean isLegal = rules.legalMove(p.getNumber(), 0, rules.getTurn());
         if(isLegal) {
             checkers.add(new Checker(p.getX(), p.getY(), 50, getTurn()));
             turn++;

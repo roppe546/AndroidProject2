@@ -46,6 +46,7 @@ public class NineMenMorrisRules {
 				if (redmarker >= 0) {
 					if (gameplan[To] == EMPTY_SPACE) {
 						gameplan[To] = RED_MARKER;
+						gameplan[From] = EMPTY_SPACE; // SLACKERJÄVLAR
 						redmarker--;
 						turn = BLUE_MOVES;
 						return true;
@@ -68,6 +69,7 @@ public class NineMenMorrisRules {
 				if (bluemarker >= 0) {
 					if (gameplan[To] == EMPTY_SPACE) {
 						gameplan[To] = BLUE_MARKER;
+                        gameplan[From] = EMPTY_SPACE; // SLACKERJÄVLAR
 						bluemarker--;
 						turn = RED_MOVES;
 						return true;
