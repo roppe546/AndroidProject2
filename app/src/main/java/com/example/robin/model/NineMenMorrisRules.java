@@ -57,6 +57,7 @@ public class NineMenMorrisRules {
 					boolean valid = isValidMove(To, From);
 					if (valid == true) {
 						gameplan[To] = RED_MARKER;
+						gameplan[From] = EMPTY_SPACE; // SLACKERJÄVLAR
 						turn = BLUE_MOVES;
 						return true;
 					} else {
@@ -79,6 +80,7 @@ public class NineMenMorrisRules {
 					boolean valid = isValidMove(To, From);
 					if (valid == true) {
 						gameplan[To] = BLUE_MARKER;
+                        gameplan[From] = EMPTY_SPACE; // SLACKERJÄVLAR
 						turn = RED_MOVES;
 						return true;
 					} else {
@@ -245,7 +247,6 @@ public class NineMenMorrisRules {
 		}
 		return false;
 	}
-
 
 	public int getTurn() {
 		return turn;

@@ -98,6 +98,9 @@ public class NineMensMorrisGame {
                 Point pointTo = getPoint(x, y);
                 Point pointFrom = getPoint(lastTouchedCheckerX, lastTouchedCheckerY);
 
+                if(pointFrom == null || pointTo == null)
+                    return;
+
                 boolean isLegal = rules.legalMove(pointTo.getNumber(), pointFrom.getNumber(), rules.getTurn());
                 System.out.println("isLegal: " + isLegal);
                 if(isLegal) {
