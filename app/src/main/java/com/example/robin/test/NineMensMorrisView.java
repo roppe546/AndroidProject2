@@ -23,6 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.example.robin.controller.NineMensMorrisGame;
+import com.example.robin.model.Board;
 import com.example.robin.model.Checker;
 import com.example.robin.model.Point;
 
@@ -32,8 +33,13 @@ import com.example.robin.model.Point;
 public class NineMensMorrisView extends View {
 
     private Bitmap background;
-    private List<Point> points = new ArrayList<>();
-    private ArrayList<Checker> checkers = new ArrayList<>();
+
+
+    private Board board;
+
+
+//    private List<Point> points = new ArrayList<>();
+//    private ArrayList<Checker> checkers = new ArrayList<>();
     private Checker lastTouchedChecker;
     private NineMensMorrisGame game;
 
@@ -43,13 +49,10 @@ public class NineMensMorrisView extends View {
 
         background = BitmapFactory.decodeResource(context.getResources(), R.drawable.background);
 
-        // TODO: Fix later
-        // Add checkers
-//        checkers.add(new Checker(100f, 100f, 50, Color.BLUE));
-//        checkers.add(new Checker(200f, 200f, 50, Color.RED));
-//        checkers.add(new Checker(200f, 500f, 50, Color.BLUE));
-//        checkers.add(new Checker(100f, 500f, 50, Color.RED));
-        game.init(lastTouchedChecker, checkers, points);
+        board = new Board();
+
+//        game.init(lastTouchedChecker, checkers, points);
+        game.init(board, lastTouchedChecker);
     }
 
     private void createPoints() {
@@ -76,6 +79,7 @@ public class NineMensMorrisView extends View {
 
         int number = 1;
 
+        ArrayList<Point> points = board.getPoints();
         for (int i = 0; i < 8; i++) {
             int factor = 1;
             for (int j = 0; j < 3; j++) {
@@ -122,6 +126,7 @@ public class NineMensMorrisView extends View {
 
         int i = 0;
         // Draw points on board
+        ArrayList<Point> points = board.getPoints();
         for (Point currentPoint : points) {
             float x = currentPoint.getX();
             float y = currentPoint.getY();
@@ -164,16 +169,17 @@ public class NineMensMorrisView extends View {
         canvas.drawLine(points.get(21).getX(), points.get(21).getY(), points.get(23).getX(), points.get(23).getY(), paint);
 
         // Put checkers in correct positions
+        ArrayList<Checker> checkers = board.getCheckers();
         for (Checker currentChecker : checkers) {
             // Find which point the checker is on
-            Point checkerPoint = points.get(currentChecker.getOnPoint() - 1);
+            Point checkerPoint = board.getPoints().get(currentChecker.getOnPoint() - 1);
             float pointX = checkerPoint.getX();
             float pointY = checkerPoint.getY();
 
             currentChecker.setX(pointX);
             currentChecker.setY(pointY);
         }
-        game.setCheckers(checkers);
+        board.setCheckers(checkers);
 
         // Draw checkers
         for (Checker currentChecker : checkers) {
@@ -211,22 +217,6 @@ public class NineMensMorrisView extends View {
         int duration = Toast.LENGTH_SHORT;
         Toast toast = Toast.makeText(context, string, duration);
         toast.show();
-    }
-
-    public List<Point> getPoints() {
-        return points;
-    }
-
-    public void setPoints(List<Point> points) {
-        this.points = points;
-    }
-
-    public ArrayList<Checker> getCheckers() {
-        return checkers;
-    }
-
-    public void setCheckers(ArrayList<Checker> checkers) {
-        this.checkers = checkers;
     }
 
     public Checker getLastTouchedChecker() {

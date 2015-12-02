@@ -5,6 +5,7 @@ import android.graphics.Color;
 import android.util.Log;
 import android.view.MotionEvent;
 
+import com.example.robin.model.Board;
 import com.example.robin.model.Checker;
 import com.example.robin.model.Point;
 import com.example.robin.test.NineMensMorrisView;
@@ -26,9 +27,11 @@ public class NineMensMorrisGame {
     private NineMenMorrisRules rules;
     private Context context;
 
+    private Board board;
+
     private Checker lastTouchedChecker;
-    private List<Checker> checkers;
-    private List <Point> points;
+//    private List<Checker> checkers;
+//    private List <Point> points;
 
     private boolean removeChecker = false;
 
@@ -40,10 +43,15 @@ public class NineMensMorrisGame {
         this.rules = new NineMenMorrisRules();
     }
 
-    public void init(Checker lastTouchedChecker, List<Checker> checkers,List <Point> points) {
+//    public void init(Checker lastTouchedChecker, List<Checker> checkers,List <Point> points) {
+//        this.lastTouchedChecker = lastTouchedChecker;
+//        this.checkers = checkers;
+//        this.points = points;
+//    }
+
+    public void init(Board board, Checker lastTouchedChecker) {
+        this.board = board;
         this.lastTouchedChecker = lastTouchedChecker;
-        this.checkers = checkers;
-        this.points = points;
     }
 
     // TODO: make game.newEvent return true or false, if it returns true, that means something changed, so we can invalidate,
@@ -55,6 +63,7 @@ public class NineMensMorrisGame {
         float y = event.getY();
 //        Toast.makeText(context, "Coordinates: x: " + x + ", y: " + y, Toast.LENGTH_SHORT).show();
 
+        System.out.println("turn " + turn);
         // Phase 1: Placing pieces
         if(turn < 18) {
             addMarkerToBoard(x, y);
@@ -65,7 +74,8 @@ public class NineMensMorrisGame {
          else if (lastTouchedChecker == null) {
 
             // Find if checker was clicked
-            for (Checker current : checkers) {
+            List<Checker> checks = board.getCheckers();
+            for (Checker current : checks) {
                 float currentX = current.getX();
                 float currentY = current.getY();
                 float radius = current.getRadius();
@@ -80,6 +90,21 @@ public class NineMensMorrisGame {
                     break;
                 }
             }
+//            for (Checker current : checkers) {
+//                float currentX = current.getX();
+//                float currentY = current.getY();
+//                float radius = current.getRadius();
+//
+//                if ((x >= currentX - radius) && (x <= currentX + radius) && (y >= currentY - radius) && (y <= currentY + radius)) {
+//                    Log.i("TOUCH", "Touched checker.");
+//
+//                    // Register checker as touched, so it will move to new position on next touch
+//                    lastTouchedChecker = current;
+//                    lastTouchedChecker.setSelected(true);
+//
+//                    break;
+//                }
+//            }
         }
 
         // A checker was previously selected
@@ -135,7 +160,8 @@ public class NineMensMorrisGame {
             if(isLegalRemove) {
                 System.out.println("GOT FUCKINGH ERE DIE");
                 int index = getCheckerOnPoint(p);
-                checkers.remove(index);
+                board.getCheckers().remove(index);
+//                checkers.remove(index);
                 removeChecker = false;
                 return;
             }
@@ -145,8 +171,10 @@ public class NineMensMorrisGame {
         if(isLegal) {
             Checker newChecker = new Checker(p.getX(), p.getY(), 50, getTurn());
             newChecker.setOnPoint(p.getNumber());
-            checkers.add(newChecker);
-            System.out.println("Checkers size: " + checkers.size());
+
+            board.getCheckers().add(newChecker);
+//            checkers.add(newChecker);
+            System.out.println("Checkers size: " + board.getCheckers().size());
             turn++;
         }
 
@@ -162,7 +190,8 @@ public class NineMensMorrisGame {
 
         Point returnPoint = null;
 
-        for(Point p: points) {
+        List<Point> pointss = board.getPoints();
+        for(Point p: pointss) {
 
             float currentPointRadius = p.getRadius() * 2;
             float currentX = p.getX();
@@ -179,8 +208,11 @@ public class NineMensMorrisGame {
     private int getCheckerOnPoint(Point point) {
 
         int returnIndex = 0;
-        for (int i = 0; i < checkers.size(); i++) {
-            if(point.getX() == checkers.get(i).getX() && point.getY() == checkers.get(i).getY()) {
+        for (int i = 0; i < board.getCheckers().size(); i++) {
+//        for (int i = 0; i < checkers.size(); i++) {
+            Checker currentChecker = board.getCheckers().get(i);
+            if (point.getX() == currentChecker.getX() && point.getY() == currentChecker.getY()) {
+//            if(point.getX() == checkers.get(i).getX() && point.getY() == checkers.get(i).getY()) {
                 System.out.println("getCheckerOnPoint found match!");
                 returnIndex = i;
                 break;
@@ -200,7 +232,7 @@ public class NineMensMorrisGame {
         return Color.RED;
     }
 
-    public void setCheckers(List<Checker> checkers) {
-        this.checkers = checkers;
+    public Board getBoard() {
+        return this.board;
     }
 }

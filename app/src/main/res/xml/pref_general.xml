@@ -1,0 +1,8 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <Preference
+        android:title="Restart game"></Preference>
+    <Preference
+        android:title="Preference 1"></Preference>
+    <Preference
+        android:title="Preference 2"></Preference>
+</PreferenceScreen>
