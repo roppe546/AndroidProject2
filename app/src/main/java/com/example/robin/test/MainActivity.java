@@ -21,15 +21,15 @@ public class MainActivity extends AppCompatActivity {
 
     private NineMensMorrisGame game;
     private NineMensMorrisView view;
+    private TextView info;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        info = (TextView) findViewById(R.id.textView);
         view = (NineMensMorrisView) findViewById(R.id.nineMensMorrisView);
-
-        game = new NineMensMorrisGame(view, (TextView)findViewById(R.id.textView));
+        game = new NineMensMorrisGame(view, this);
     }
 
     @Override
@@ -59,6 +59,12 @@ public class MainActivity extends AppCompatActivity {
 
         // Set checkers in correct position
         game.getBoard().setCheckers(checkers);
+    }
+
+
+    //TODO fix the bug when mill occurs.
+    public void updateUI(String string) {
+            info.setText(string);
     }
 
     @Override

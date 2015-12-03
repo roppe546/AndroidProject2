@@ -9,6 +9,7 @@ import android.widget.TextView;
 import com.example.robin.model.Board;
 import com.example.robin.model.Checker;
 import com.example.robin.model.Point;
+import com.example.robin.test.MainActivity;
 import com.example.robin.test.NineMensMorrisView;
 
 import com.example.robin.model.NineMenMorrisRules;
@@ -34,17 +35,18 @@ public class NineMensMorrisGame {
     private Checker lastTouchedChecker;
 
     private boolean removeChecker = false;
+    private MainActivity activity;
 
-    public NineMensMorrisGame(NineMensMorrisView view, TextView info) {
+    public NineMensMorrisGame(NineMensMorrisView view, MainActivity activity) {
         this.view = view;
         this.rules = new NineMenMorrisRules();
-        this.info = info;
+        this.activity = activity;
 
         board = new Board();
         view.initialize(board, this);
 
         lastTouchedChecker = null;
-        updateInfo();
+        activity.updateUI(prepareString());
     }
 
 
@@ -153,21 +155,26 @@ public class NineMensMorrisGame {
                 }
             }
         }
-        updateInfo();
+        activity.updateUI(prepareString());
     }
 
-    //TODO fix the bug when mill occurs.
-    private void updateInfo() {
-        int turn = rules.getTurn();
-        if(turn == NineMenMorrisRules.BLUE_MOVES) {
-            if(removeChecker == true)
-                info.setText("Red's turn (mill)");
-            info.setText("Red's turn");
-        } else {
-            if(removeChecker == true)
-                info.setText("Blue's turn (mill)");
-            info.setText("Blue's turn");
+    private String prepareString() {
+        String str = "";
+
+        if(rules.getTurn() == NineMenMorrisRules.RED_MOVES) {
+            if(removeChecker == true) {
+                str = "Red's turn (mill)";
+            } else
+                str = "Blue's turn";
         }
+        else {
+            if(removeChecker == true) {
+                str = "Blue's turn (mill)";
+            } else
+                str = "Red's turn";
+        }
+
+        return str;
     }
 
     private void addMarkerToBoard(float x, float y) {
