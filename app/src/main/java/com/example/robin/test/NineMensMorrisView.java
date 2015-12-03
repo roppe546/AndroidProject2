@@ -10,6 +10,8 @@ import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
+import android.util.DisplayMetrics;
+import android.util.TypedValue;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Toast;
@@ -39,6 +41,8 @@ public class NineMensMorrisView extends View {
     private Board board;
     private Checker lastTouchedChecker;
     private float preferredRadius = -1;
+
+    private String color = "green";
 
     public NineMensMorrisView(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -138,16 +142,7 @@ public class NineMensMorrisView extends View {
             float radius = currentPoint.getRadius();
             Paint checkerPaint = currentPoint.getPaint();
 
-//            canvas.drawCircle(x, y, radius, checkerPaint);
-
-            Rect imageBounds = canvas.getClipBounds();  // Adjust this for where you want it
-
-            red.draw(canvas);
-
-
-            //bugfixing
-//            checkerPaint.setTextSize(75);
-//            canvas.drawText(String.valueOf(i++), x, y, checkerPaint);
+            canvas.drawCircle(x, y, radius, checkerPaint);
         }
 
         // Draw rectangles on board
@@ -195,7 +190,33 @@ public class NineMensMorrisView extends View {
             Paint checkerPaint = new Paint();
             checkerPaint.setColor(currentChecker.getColor());
 
-            canvas.drawCircle(x, y, radius, checkerPaint);
+//            canvas.drawCircle(x, y, radius, checkerPaint);
+
+            if(color.equals("blue")) {
+                Bitmap blue = BitmapFactory.decodeResource(getResources(), R.drawable.circle_blue);
+                Bitmap resizedBitmap = Bitmap.createScaledBitmap(blue, 130, 130, false);
+                canvas.drawBitmap(resizedBitmap, x - 65, y - 65, null);
+            } else if(color.equals("green")) {
+                Bitmap blue = BitmapFactory.decodeResource(getResources(), R.drawable.circle_green);
+                Bitmap resizedBitmap = Bitmap.createScaledBitmap(blue, 130, 130, false);
+                canvas.drawBitmap(resizedBitmap, x - 65, y - 65, null);
+            } else if(color.equals("grey")) {
+                Bitmap blue = BitmapFactory.decodeResource(getResources(), R.drawable.circle_grey);
+                Bitmap resizedBitmap = Bitmap.createScaledBitmap(blue, 130, 130, false);
+                canvas.drawBitmap(resizedBitmap, x - 65, y - 65, null);
+            } else if(color.equals("orange")) {
+                Bitmap blue = BitmapFactory.decodeResource(getResources(), R.drawable.circle_orange);
+                Bitmap resizedBitmap = Bitmap.createScaledBitmap(blue, 130, 130, false);
+                canvas.drawBitmap(resizedBitmap, x - 65, y - 65, null);
+            } else if(color.equals("red")) {
+                Bitmap blue = BitmapFactory.decodeResource(getResources(), R.drawable.circle_red);
+                Bitmap resizedBitmap = Bitmap.createScaledBitmap(blue, 130, 130, false);
+                canvas.drawBitmap(resizedBitmap, x - 65, y - 65, null);
+            } else if(color.equals("yellow")) {
+                Bitmap blue = BitmapFactory.decodeResource(getResources(), R.drawable.circle_yellow);
+                Bitmap resizedBitmap = Bitmap.createScaledBitmap(blue, 130, 130, false);
+                canvas.drawBitmap(resizedBitmap, x - 65, y - 65, null);
+            }
 
             // Put stroke around circle if selected
             if (currentChecker.isSelected()) {
