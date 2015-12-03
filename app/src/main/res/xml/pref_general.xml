@@ -5,33 +5,18 @@
     </Preference>
 
     <Preference
-        android:key="player1blue"
-        android:title="player1 checker color blue">
+        android:key="redvsblue"
+        android:title="red versus blue">
     </Preference>
 
     <Preference
-        android:key="player1green"
-        android:title="player1 checker color green">
+        android:key="greenvsorange"
+        android:title="green versus orange">
     </Preference>
 
     <Preference
-        android:key="player1grey"
-        android:title="player1 checker color grey">
-    </Preference>
-
-    <Preference
-        android:key="player1red"
-        android:title="player1 checker color orange">
-    </Preference>
-
-    <Preference
-        android:key="player1red"
-        android:title="player1 checker color red">
-    </Preference>
-
-    <Preference
-        android:key="player1yellow"
-        android:title="player1 checker color yellow">
+        android:key="yellowvsgrey"
+        android:title="yellow versus grey">
     </Preference>
 
 </PreferenceScreen>

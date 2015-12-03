@@ -19,7 +19,6 @@ public class SettingsActivity extends Activity {
         // Display the fragment as the main content.
         getFragmentManager().beginTransaction().replace(android.R.id.content,
                 new PrefsFragment()).commit();
-
     }
 
 
@@ -38,6 +37,42 @@ public class SettingsActivity extends Activity {
 
                     Intent data = new Intent();
                     data.putExtra("option", 1);
+                    getActivity().setResult(RESULT_OK, data);
+                    getActivity().finish();
+                    return false;
+                }
+            });
+            Preference redvsblue = findPreference("redvsblue");
+            redvsblue.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+                @Override
+                public boolean onPreferenceClick(Preference preference) {
+
+                    Intent data = new Intent();
+                    data.putExtra("option", 2);
+                    getActivity().setResult(RESULT_OK, data);
+                    getActivity().finish();
+                    return false;
+                }
+            });
+            Preference greenvsorange = findPreference("greenvsorange");
+            greenvsorange.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+                @Override
+                public boolean onPreferenceClick(Preference preference) {
+
+                    Intent data = new Intent();
+                    data.putExtra("option", 3);
+                    getActivity().setResult(RESULT_OK, data);
+                    getActivity().finish();
+                    return false;
+                }
+            });
+            Preference yellowvsgrey = findPreference("yellowvsgrey");
+            yellowvsgrey.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+                @Override
+                public boolean onPreferenceClick(Preference preference) {
+
+                    Intent data = new Intent();
+                    data.putExtra("option", 4);
                     getActivity().setResult(RESULT_OK, data);
                     getActivity().finish();
                     return false;

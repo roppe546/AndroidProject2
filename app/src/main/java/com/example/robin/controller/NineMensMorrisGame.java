@@ -44,7 +44,7 @@ public class NineMensMorrisGame {
         view.initialize(board, this);   // Make view aware of the board and the controller (this)
 
         lastTouchedChecker = null;
-        activity.updateUI(prepareString());
+        updateUI();
     }
 
     // TODO: make game.newEvent return true or false, if it returns true, that means something changed, so we can invalidate,
@@ -94,7 +94,7 @@ public class NineMensMorrisGame {
                     return;
                 }
 
-                activity.updateUI(prepareString());
+                updateUI();
                 return;
             }
         }
@@ -162,26 +162,25 @@ public class NineMensMorrisGame {
                 }
             }
         }
-        activity.updateUI(prepareString());
+        updateUI();
     }
 
-    private String prepareString() {
+    public void updateUI() {
         String str = "";
 
         if(rules.getTurn() == NineMenMorrisRules.RED_MOVES) {
             if(removeChecker == true) {
-                str = "Red's turn (mill)";
+                str = view.getPlayer1color() + " (mill)";
             } else
-                str = "Blue's turn";
+                str = view.getPlayer2color() + "'s turn";
         }
         else {
             if(removeChecker == true) {
-                str = "Blue's turn (mill)";
+                str = view.getPlayer2color() + "'s turn (mill)";
             } else
-                str = "Red's turn";
+                str = view.getPlayer1color() + "'s turn";
         }
-
-        return str;
+        activity.updateUI(str);
     }
 
     private void addMarkerToBoard(float x, float y) {

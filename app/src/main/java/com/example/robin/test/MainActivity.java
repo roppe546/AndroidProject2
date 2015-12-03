@@ -284,14 +284,22 @@ public class MainActivity extends AppCompatActivity {
             }
             else if(option == 2) {
                 Log.i("OPT", "Option 2 selected in preferences");
-
-
+                view.setPlayer1color("blue");
+                view.setPlayer2color("red");
+                view.invalidate();
             } else if(option == 3) {
                 Log.i("OPT", "Option 3 selected in preferences");
-
-
+                view.setPlayer1color("green");
+                view.setPlayer2color("orange");
+                view.invalidate();
+            } else if(option == 4) {
+                Log.i("OPT", "Option 3 selected in preferences");
+                view.setPlayer1color("yellow");
+                view.setPlayer2color("grey");
+                view.invalidate();
             }
         }
+        game.updateUI();
     }
 
     private void restart() {

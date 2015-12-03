@@ -30,12 +30,6 @@ public class NineMensMorrisView extends View {
 
     private Bitmap background;
 
-    private Drawable blue;
-    private Drawable green;
-    private Drawable yellow;
-    private Drawable red;
-    private Drawable grey;
-    private Drawable orange;
 
     private NineMensMorrisGame game;
     private Board board;
@@ -47,15 +41,7 @@ public class NineMensMorrisView extends View {
 
     public NineMensMorrisView(Context context, AttributeSet attrs) {
         super(context, attrs);
-
         background = BitmapFactory.decodeResource(context.getResources(), R.drawable.background);
-        red = context.getResources().getDrawable(R.drawable.circle_red);
-        yellow = context.getResources().getDrawable(R.drawable.circle_yellow);
-        blue = context.getResources().getDrawable(R.drawable.circle_blue);
-        green = context.getResources().getDrawable(R.drawable.circle_green);
-        grey = context.getResources().getDrawable(R.drawable.circle_grey);
-        orange = context.getResources().getDrawable(R.drawable.circle_orange);
-
     }
 
     public void initialize(Board board, NineMensMorrisGame game) {
@@ -292,5 +278,21 @@ public class NineMensMorrisView extends View {
 
     public void setPreferredRadius(float preferredRadius) {
         this.preferredRadius = preferredRadius;
+    }
+
+    public String getPlayer1color() {
+        return player1color;
+    }
+
+    public void setPlayer1color(String player1color) {
+        this.player1color = player1color;
+    }
+
+    public String getPlayer2color() {
+        return player2color;
+    }
+
+    public void setPlayer2color(String player2color) {
+        this.player2color = player2color;
     }
 }
