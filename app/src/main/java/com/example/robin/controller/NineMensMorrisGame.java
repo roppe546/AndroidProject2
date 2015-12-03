@@ -4,6 +4,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.util.Log;
 import android.view.MotionEvent;
+import android.widget.TextView;
 
 import com.example.robin.model.Board;
 import com.example.robin.model.Checker;
@@ -11,6 +12,7 @@ import com.example.robin.model.Point;
 import com.example.robin.test.NineMensMorrisView;
 
 import com.example.robin.model.NineMenMorrisRules;
+import com.example.robin.test.R;
 
 import java.util.List;
 
@@ -26,19 +28,23 @@ public class NineMensMorrisGame {
     private NineMensMorrisView view;
     private NineMenMorrisRules rules;
 
+    private TextView info;
+
     private Board board;
     private Checker lastTouchedChecker;
 
     private boolean removeChecker = false;
 
-    public NineMensMorrisGame(NineMensMorrisView view) {
+    public NineMensMorrisGame(NineMensMorrisView view, TextView info) {
         this.view = view;
         this.rules = new NineMenMorrisRules();
+        this.info = info;
 
         board = new Board();
         view.initialize(board, this);
 
         lastTouchedChecker = null;
+        updateInfo();
     }
 
 
@@ -52,6 +58,7 @@ public class NineMensMorrisGame {
 
         // Phase 1: Placing pieces
         int turnsLeftFaceOne = rules.getBluemarker() + rules.getBluemarker();
+
         if(turnsLeftFaceOne >= 0) {
             addMarkerToBoard(x, y);
         }
@@ -145,6 +152,20 @@ public class NineMensMorrisGame {
                     }
                 }
             }
+        }
+        updateInfo();
+    }
+
+    private void updateInfo() {
+        int turn = rules.getTurn();
+        if(turn == NineMenMorrisRules.BLUE_MOVES) {
+            if(removeChecker == true)
+                info.setText("Red's turn (mill)");
+            info.setText("Red's turn");
+        } else {
+            if(removeChecker == true)
+                info.setText("Blue's turn (mill)");
+            info.setText("Blue's turn");
         }
     }
 

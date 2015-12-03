@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.TextView;
 
 import com.example.robin.controller.NineMensMorrisGame;
 import com.example.robin.model.Checker;
@@ -28,7 +29,7 @@ public class MainActivity extends Activity {
 
         view = (NineMensMorrisView) findViewById(R.id.nineMensMorrisView);
 
-        game = new NineMensMorrisGame(view);
+        game = new NineMensMorrisGame(view, (TextView)findViewById(R.id.textView));
     }
 
     @Override

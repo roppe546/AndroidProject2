@@ -29,5 +29,4 @@ public class SettingsActivity extends Activity {
             addPreferencesFromResource(R.xml.pref_general);
         }
     }
-
 }
