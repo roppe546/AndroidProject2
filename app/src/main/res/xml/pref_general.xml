@@ -5,12 +5,33 @@
     </Preference>
 
     <Preference
-        android:key="three"
-        android:title="New three men's morris game">
+        android:key="player1blue"
+        android:title="player1 checker color blue">
     </Preference>
 
-    <!--<Preference-->
-        <!--android:key="Pref2"-->
-        <!--android:title="Preference 2">
-        </Preference>-->
+    <Preference
+        android:key="player1green"
+        android:title="player1 checker color green">
+    </Preference>
+
+    <Preference
+        android:key="player1grey"
+        android:title="player1 checker color grey">
+    </Preference>
+
+    <Preference
+        android:key="player1red"
+        android:title="player1 checker color orange">
+    </Preference>
+
+    <Preference
+        android:key="player1red"
+        android:title="player1 checker color red">
+    </Preference>
+
+    <Preference
+        android:key="player1yellow"
+        android:title="player1 checker color yellow">
+    </Preference>
+
 </PreferenceScreen>
