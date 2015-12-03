@@ -50,10 +50,10 @@ public class NineMenMorrisRules implements Parcelable {
 //					System.out.println("I don't check if valid move");
 					if (gameplan[To] == EMPTY_SPACE) {
 						gameplan[To] = RED_MARKER;
-						gameplan[From] = EMPTY_SPACE; // SLACKERJÄVLAR
+						gameplan[From] = EMPTY_SPACE;
 						redmarker--;
 						turn = BLUE_MOVES;
-                        System.out.println(turn + " moves next");
+//                        System.out.println(turn + " moves next");
                         return true;
 					}
 				}
@@ -63,9 +63,9 @@ public class NineMenMorrisRules implements Parcelable {
 					boolean valid = isValidMove(To, From);
 					if (valid == true) {
 						gameplan[To] = RED_MARKER;
-						gameplan[From] = EMPTY_SPACE; // SLACKERJÄVLAR
+						gameplan[From] = EMPTY_SPACE;
 						turn = BLUE_MOVES;
-                        System.out.println(turn + " moves next");
+//                        System.out.println(turn + " moves next");
                         return true;
 					} else {
 						return false;
@@ -78,10 +78,10 @@ public class NineMenMorrisRules implements Parcelable {
 //					System.out.println("I don't check if valid move");
 					if (gameplan[To] == EMPTY_SPACE) {
 						gameplan[To] = BLUE_MARKER;
-                        gameplan[From] = EMPTY_SPACE; // SLACKERJÄVLAR
+                        gameplan[From] = EMPTY_SPACE;
 						bluemarker--;
 						turn = RED_MOVES;
-                        System.out.println(turn + " moves next");
+//                        System.out.println(turn + " moves next");
                         return true;
 					}
 				}
@@ -90,9 +90,9 @@ public class NineMenMorrisRules implements Parcelable {
 					boolean valid = isValidMove(To, From);
 					if (valid == true) {
 						gameplan[To] = BLUE_MARKER;
-                        gameplan[From] = EMPTY_SPACE; // SLACKERJÄVLAR
+                        gameplan[From] = EMPTY_SPACE;
 						turn = RED_MOVES;
-                        System.out.println(turn + " moves next");
+//                        System.out.println(turn + " moves next");
                         return true;
 					} else {
 						return false;

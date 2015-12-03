@@ -58,6 +58,24 @@ public class NineMensMorrisGame {
         }
 
         // Phase 2: Moving pieces
+        // Removing if we got mill
+
+        else if(removeChecker) {
+
+            Point p = getPoint(x, y);
+            if(p == null)
+                return;
+
+            boolean isLegalRemove = rules.remove(p.getNumber(), rules.getTurn() + 3);
+            System.out.println("isLegalRemove: " + isLegalRemove);
+            if(isLegalRemove) {
+                int index = getCheckerOnPoint(p);
+                board.getCheckers().remove(index);
+//                checkers.remove(index);
+                removeChecker = false;
+                return;
+            }
+        }
         // No checker previously selected
          else if (lastTouchedChecker == null) {
 
@@ -118,14 +136,14 @@ public class NineMensMorrisGame {
                 if(pointFrom == null || pointTo == null)
                     return;
 
-                System.out.println("from: " + pointFrom.getNumber());
-                System.out.println("to: " + pointTo.getNumber());
+//                System.out.println("from: " + pointFrom.getNumber());
+//                System.out.println("to: " + pointTo.getNumber());
 
                 int nextMove = getMarkerTurn(pointFrom);
 
-                System.out.println("next move: " +nextMove);
+//                System.out.println("next move: " +nextMove);
                 boolean isLegal = rules.legalMove(pointTo.getNumber(), pointFrom.getNumber(), nextMove);
-                System.out.println("isLegal: " + isLegal);
+//                System.out.println("isLegal: " + isLegal);
                 if(isLegal) {
                     lastTouchedChecker.setX(pointTo.getX());
                     lastTouchedChecker.setY(pointTo.getY());
@@ -135,7 +153,13 @@ public class NineMensMorrisGame {
                     lastTouchedChecker.setOnPoint(pointTo.getNumber());
                     lastTouchedChecker = null;
 
-                    System.out.println("moved to: " + pointTo.getNumber());
+//                    System.out.println("moved to: " + pointTo.getNumber());
+
+                    boolean isRemove = rules.remove(pointTo.getNumber());
+                    System.out.println("isRemove: " + isRemove);
+                    if(isRemove) {
+                        removeChecker = true;
+                    }
                 }
             }
         }
@@ -147,8 +171,8 @@ public class NineMensMorrisGame {
         if(p == null)
             return;
 
+        // Removing if we got mill
         if(removeChecker) {
-
             boolean isLegalRemove = rules.remove(p.getNumber(), rules.getTurn() + 3);
             System.out.println("isLegalRemove: " + isLegalRemove);
             if(isLegalRemove) {
@@ -167,11 +191,10 @@ public class NineMensMorrisGame {
 
             board.getCheckers().add(newChecker);
 //            checkers.add(newChecker);
-            System.out.println("Checkers size: " + board.getCheckers().size());
+//            System.out.println("Checkers size: " + board.getCheckers().size());
 //            turn++;
         }
 
-        //TODO implement mill logic, have to create states if we are adding a marker or removing a marker.
         boolean isRemove = rules.remove(p.getNumber());
         System.out.println("isRemove: " + isRemove);
         if(isRemove) {
@@ -206,7 +229,7 @@ public class NineMensMorrisGame {
             Checker currentChecker = board.getCheckers().get(i);
             if (point.getX() == currentChecker.getX() && point.getY() == currentChecker.getY()) {
 //            if(point.getX() == checkers.get(i).getX() && point.getY() == checkers.get(i).getY()) {
-                System.out.println("getCheckerOnPoint found match!");
+//                System.out.println("getCheckerOnPoint found match!");
                 returnIndex = i;
                 break;
             }
