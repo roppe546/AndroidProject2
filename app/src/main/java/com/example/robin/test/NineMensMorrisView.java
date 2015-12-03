@@ -28,8 +28,17 @@ import com.example.robin.test.Point;
  */
 public class NineMensMorrisView extends View {
 
-    private Bitmap background;
+    private final Bitmap blueResizedBitmap;
+    private final Bitmap greenResizedBitmap;
+    private final Bitmap greyResizedBitmap;
+    private final Bitmap orangeResizedBitmap;
+    private final Bitmap redResizedBitmap;
+    private final Bitmap yellowResizedBitmap;
 
+    private int _background = 1;
+    private Bitmap background1;
+    private Bitmap background2;
+    private Bitmap background3;
 
     private NineMensMorrisGame game;
     private Board board;
@@ -41,7 +50,29 @@ public class NineMensMorrisView extends View {
 
     public NineMensMorrisView(Context context, AttributeSet attrs) {
         super(context, attrs);
-        background = BitmapFactory.decodeResource(context.getResources(), R.drawable.background);
+        background1 = BitmapFactory.decodeResource(context.getResources(), R.drawable.background);
+        background2 = BitmapFactory.decodeResource(context.getResources(), R.drawable.grey2);
+        background3 = BitmapFactory.decodeResource(context.getResources(), R.drawable.gray3);
+
+        Bitmap blue = BitmapFactory.decodeResource(getResources(), R.drawable.circle_blue);
+        blueResizedBitmap = Bitmap.createScaledBitmap(blue, 130, 130, false);
+
+        Bitmap green = BitmapFactory.decodeResource(getResources(), R.drawable.circle_green);
+        greenResizedBitmap = Bitmap.createScaledBitmap(green, 130, 130, false);
+
+        Bitmap grey = BitmapFactory.decodeResource(getResources(), R.drawable.circle_grey);
+        greyResizedBitmap = Bitmap.createScaledBitmap(grey, 130, 130, false);
+
+        Bitmap orange = BitmapFactory.decodeResource(getResources(), R.drawable.circle_orange);
+        orangeResizedBitmap = Bitmap.createScaledBitmap(orange, 130, 130, false);
+
+        Bitmap red = BitmapFactory.decodeResource(getResources(), R.drawable.circle_red);
+        redResizedBitmap = Bitmap.createScaledBitmap(red, 130, 130, false);
+
+        Bitmap yellow = BitmapFactory.decodeResource(getResources(), R.drawable.circle_yellow);
+        yellowResizedBitmap = Bitmap.createScaledBitmap(yellow, 130, 130, false);
+
+
     }
 
     public void initialize(Board board, NineMensMorrisGame game) {
@@ -115,7 +146,13 @@ public class NineMensMorrisView extends View {
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
 
-        canvas.drawBitmap(background, 0, 0, null);
+        if(_background == 1) {
+            canvas.drawBitmap(background1, 0, 0, null);
+        } else if (_background == 2) {
+            canvas.drawBitmap(background2, 0, 0, null);
+        } else {
+            canvas.drawBitmap(background3, 0, 0, null);
+        }
 
         // Create board points
         createPoints();
@@ -178,56 +215,34 @@ public class NineMensMorrisView extends View {
             checkerPaint.setColor(currentChecker.getColor());
 
             if(currentChecker.getColor() == Color.RED) {
+
                 if (player1color.equals("blue")) {
-                    Bitmap blue = BitmapFactory.decodeResource(getResources(), R.drawable.circle_blue);
-                    Bitmap resizedBitmap = Bitmap.createScaledBitmap(blue, 130, 130, false);
-                    canvas.drawBitmap(resizedBitmap, x - 65, y - 65, null);
+                    canvas.drawBitmap(blueResizedBitmap, x - 65, y - 65, null);
                 } else if (player1color.equals("green")) {
-                    Bitmap blue = BitmapFactory.decodeResource(getResources(), R.drawable.circle_green);
-                    Bitmap resizedBitmap = Bitmap.createScaledBitmap(blue, 130, 130, false);
-                    canvas.drawBitmap(resizedBitmap, x - 65, y - 65, null);
+                    canvas.drawBitmap(greenResizedBitmap, x - 65, y - 65, null);
                 } else if (player1color.equals("grey")) {
-                    Bitmap blue = BitmapFactory.decodeResource(getResources(), R.drawable.circle_grey);
-                    Bitmap resizedBitmap = Bitmap.createScaledBitmap(blue, 130, 130, false);
-                    canvas.drawBitmap(resizedBitmap, x - 65, y - 65, null);
+                    canvas.drawBitmap(greyResizedBitmap, x - 65, y - 65, null);
                 } else if (player1color.equals("orange")) {
-                    Bitmap blue = BitmapFactory.decodeResource(getResources(), R.drawable.circle_orange);
-                    Bitmap resizedBitmap = Bitmap.createScaledBitmap(blue, 130, 130, false);
-                    canvas.drawBitmap(resizedBitmap, x - 65, y - 65, null);
+                    canvas.drawBitmap(orangeResizedBitmap, x - 65, y - 65, null);
                 } else if (player1color.equals("red")) {
-                    Bitmap blue = BitmapFactory.decodeResource(getResources(), R.drawable.circle_red);
-                    Bitmap resizedBitmap = Bitmap.createScaledBitmap(blue, 130, 130, false);
-                    canvas.drawBitmap(resizedBitmap, x - 65, y - 65, null);
+                    canvas.drawBitmap(redResizedBitmap, x - 65, y - 65, null);
                 } else if (player1color.equals("yellow")) {
-                    Bitmap blue = BitmapFactory.decodeResource(getResources(), R.drawable.circle_yellow);
-                    Bitmap resizedBitmap = Bitmap.createScaledBitmap(blue, 130, 130, false);
-                    canvas.drawBitmap(resizedBitmap, x - 65, y - 65, null);
+                    canvas.drawBitmap(yellowResizedBitmap, x - 65, y - 65, null);
                 }
             } else {
+
                 if (player2color.equals("blue")) {
-                    Bitmap blue = BitmapFactory.decodeResource(getResources(), R.drawable.circle_blue);
-                    Bitmap resizedBitmap = Bitmap.createScaledBitmap(blue, 130, 130, false);
-                    canvas.drawBitmap(resizedBitmap, x - 65, y - 65, null);
+                    canvas.drawBitmap(blueResizedBitmap, x - 65, y - 65, null);
                 } else if (player2color.equals("green")) {
-                    Bitmap blue = BitmapFactory.decodeResource(getResources(), R.drawable.circle_green);
-                    Bitmap resizedBitmap = Bitmap.createScaledBitmap(blue, 130, 130, false);
-                    canvas.drawBitmap(resizedBitmap, x - 65, y - 65, null);
+                    canvas.drawBitmap(greenResizedBitmap, x - 65, y - 65, null);
                 } else if (player2color.equals("grey")) {
-                    Bitmap blue = BitmapFactory.decodeResource(getResources(), R.drawable.circle_grey);
-                    Bitmap resizedBitmap = Bitmap.createScaledBitmap(blue, 130, 130, false);
-                    canvas.drawBitmap(resizedBitmap, x - 65, y - 65, null);
+                    canvas.drawBitmap(greyResizedBitmap, x - 65, y - 65, null);
                 } else if (player2color.equals("orange")) {
-                    Bitmap blue = BitmapFactory.decodeResource(getResources(), R.drawable.circle_orange);
-                    Bitmap resizedBitmap = Bitmap.createScaledBitmap(blue, 130, 130, false);
-                    canvas.drawBitmap(resizedBitmap, x - 65, y - 65, null);
+                    canvas.drawBitmap(orangeResizedBitmap, x - 65, y - 65, null);
                 } else if (player2color.equals("red")) {
-                    Bitmap blue = BitmapFactory.decodeResource(getResources(), R.drawable.circle_red);
-                    Bitmap resizedBitmap = Bitmap.createScaledBitmap(blue, 130, 130, false);
-                    canvas.drawBitmap(resizedBitmap, x - 65, y - 65, null);
+                    canvas.drawBitmap(redResizedBitmap, x - 65, y - 65, null);
                 } else if (player2color.equals("yellow")) {
-                    Bitmap blue = BitmapFactory.decodeResource(getResources(), R.drawable.circle_yellow);
-                    Bitmap resizedBitmap = Bitmap.createScaledBitmap(blue, 130, 130, false);
-                    canvas.drawBitmap(resizedBitmap, x - 65, y - 65, null);
+                    canvas.drawBitmap(yellowResizedBitmap, x - 65, y - 65, null);
                 }
             }
 
@@ -294,5 +309,13 @@ public class NineMensMorrisView extends View {
 
     public void setPlayer2color(String player2color) {
         this.player2color = player2color;
+    }
+
+    public int get_background() {
+        return _background;
+    }
+
+    public void set_background(int _background) {
+        this._background = _background;
     }
 }

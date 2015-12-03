@@ -286,16 +286,19 @@ public class MainActivity extends AppCompatActivity {
                 Log.i("OPT", "Option 2 selected in preferences");
                 view.setPlayer1color("blue");
                 view.setPlayer2color("red");
+                view.set_background(1);
                 view.invalidate();
             } else if(option == 3) {
                 Log.i("OPT", "Option 3 selected in preferences");
                 view.setPlayer1color("green");
                 view.setPlayer2color("orange");
+                view.set_background(2);
                 view.invalidate();
             } else if(option == 4) {
                 Log.i("OPT", "Option 3 selected in preferences");
                 view.setPlayer1color("yellow");
                 view.setPlayer2color("grey");
+                view.set_background(3);
                 view.invalidate();
             }
         }
