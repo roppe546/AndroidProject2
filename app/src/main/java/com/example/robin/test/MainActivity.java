@@ -64,8 +64,6 @@ public class MainActivity extends AppCompatActivity {
         game.getBoard().setCheckers(checkers);
     }
 
-
-    //TODO fix the bug when mill occurs.
     public void updateUI(String string) {
             info.setText(string);
     }
@@ -98,9 +96,27 @@ public class MainActivity extends AppCompatActivity {
 
         if (itemId == R.id.settingsButton) {
             Log.i("ActionMenu", "Selected Settings in menu");
-            startActivity(new Intent(this, SettingsActivity.class));
+            startActivityForResult(new Intent(this, SettingsActivity.class), 200);
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (resultCode == RESULT_OK && requestCode == 200) {
+            boolean isRestart = data.getExtras().getBoolean("isRestart");
+            if(isRestart)
+                restart();
+        }
+    }
+
+    private void restart() {
+        info = (TextView) findViewById(R.id.textView);
+        view = (NineMensMorrisView) findViewById(R.id.nineMensMorrisView);
+        game = new NineMensMorrisGame(view, this);
+        view.invalidate();
     }
 }
