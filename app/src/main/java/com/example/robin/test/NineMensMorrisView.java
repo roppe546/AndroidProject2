@@ -17,9 +17,9 @@ import android.widget.Toast;
 import java.util.ArrayList;
 
 import com.example.robin.controller.NineMensMorrisGame;
-import com.example.robin.model.Board;
-import com.example.robin.model.Checker;
-import com.example.robin.model.Point;
+import com.example.robin.test.Board;
+import com.example.robin.test.Checker;
+import com.example.robin.test.Point;
 
 /**
  * Created by Robin on 2015-12-01.
@@ -192,7 +192,8 @@ public class NineMensMorrisView extends View {
             float x = currentChecker.getX();
             float y = currentChecker.getY();
             float radius = currentChecker.getRadius();
-            Paint checkerPaint = currentChecker.getPaint();
+            Paint checkerPaint = new Paint();
+            checkerPaint.setColor(currentChecker.getColor());
 
             canvas.drawCircle(x, y, radius, checkerPaint);
 
