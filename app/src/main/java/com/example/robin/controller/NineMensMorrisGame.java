@@ -68,9 +68,11 @@ public class NineMensMorrisGame {
         // Checking if we have a winner.
         else if(rules.lose(NineMenMorrisRules.BLUE_MARKER)) {
             System.out.println("Red have < 3 checker's. Blue wins!");
+            activity.updateUI("Red have < 3 checker's. Blue have won!");
             return;
         } else if(rules.lose(NineMenMorrisRules.RED_MARKER)) {
             System.out.println("Blue have < 3 checker's. Red wins!");
+            activity.updateUI("Blue have < 3 checker's. Red have won!");
             return;
         }
 
