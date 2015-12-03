@@ -57,9 +57,17 @@ public class NineMensMorrisGame {
             addMarkerToBoard(x, y);
         }
 
+        // Checking if we have a winner.
+        else if(rules.lose(NineMenMorrisRules.BLUE_MARKER)) {
+            System.out.println("Red have < 3 checker's. Blue wins!");
+            return;
+        } else if(rules.lose(NineMenMorrisRules.RED_MARKER)) {
+            System.out.println("Blue have < 3 checker's. Red wins!");
+            return;
+        }
+
         // Phase 2: Moving pieces
         // Removing if we got mill
-
         else if(removeChecker) {
 
             Point p = getPoint(x, y);
