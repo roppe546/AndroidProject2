@@ -5,6 +5,7 @@ import android.graphics.Paint;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.robin.model.Board;
 import com.example.robin.model.Checker;
@@ -36,6 +37,7 @@ public class NineMensMorrisGame {
 
     private boolean removeChecker = false;
     private MainActivity activity;
+    private boolean isGameOver = false;
 
     public NineMensMorrisGame(NineMensMorrisView view, MainActivity activity) {
         this.view = view;
@@ -54,6 +56,8 @@ public class NineMensMorrisGame {
     // TODO: don't invalidate if false. this to not do uneccesary redraws on every click
     public void newEvent(MotionEvent event) {
 
+        if(isGameOver)
+            return;
         // Get touch coordinates
         float x = event.getX();
         float y = event.getY();
@@ -63,17 +67,6 @@ public class NineMensMorrisGame {
 
         if(turnsLeftFaceOne >= 0) {
             addMarkerToBoard(x, y);
-        }
-
-        // Checking if we have a winner.
-        else if(rules.lose(NineMenMorrisRules.BLUE_MARKER)) {
-            System.out.println("Red have < 3 checker's. Blue wins!");
-            activity.updateUI("Red have < 3 checker's. Blue have won!");
-            return;
-        } else if(rules.lose(NineMenMorrisRules.RED_MARKER)) {
-            System.out.println("Blue have < 3 checker's. Red wins!");
-            activity.updateUI("Blue have < 3 checker's. Red have won!");
-            return;
         }
 
         // Phase 2: Moving pieces
@@ -90,6 +83,23 @@ public class NineMensMorrisGame {
                 int index = getCheckerOnPoint(p);
                 board.getCheckers().remove(index);
                 removeChecker = false;
+
+                // Checking if we have a winner.
+                if(rules.lose(NineMenMorrisRules.BLUE_MARKER)) {
+                    System.out.println("Red have < 3 checker's. Blue wins!");
+                    activity.updateUI("Blue wins!");
+                    isGameOver = true;
+                    Toast.makeText(activity.getApplicationContext(), "Red have < 3 checker's. Blue wins!", Toast.LENGTH_LONG).show();
+                    return;
+                } else if(rules.lose(NineMenMorrisRules.RED_MARKER)) {
+                    System.out.println("Blue have < 3 checker's. Red wins!");
+                    activity.updateUI("Red wins!");
+                    isGameOver = true;
+                    Toast.makeText(activity.getApplicationContext(), "Blue have < 3 checker's. Red wins!", Toast.LENGTH_LONG).show();
+                    return;
+                }
+
+                activity.updateUI(prepareString());
                 return;
             }
         }
