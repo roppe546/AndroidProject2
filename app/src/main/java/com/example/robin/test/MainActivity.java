@@ -273,15 +273,14 @@ public class MainActivity extends AppCompatActivity {
                 // Delete files holding state information
                 File dir = getFilesDir();
                 Log.i("123", dir.toString());
-                File game_state = new File(dir, "/files/game_state");
-                File view_state = new File(dir, "/files/view_state");
+                File game_state = new File(dir, "game_state");
+                File view_state = new File(dir, "view_state");
                 boolean s = game_state.delete();
                 Log.i("123", "deleting file game_state: " + s);
                 s = view_state.delete();
                 Log.i("123", "deleting file view_state: " + s);
 
                 restart();
-                view.invalidate();
             }
             else if(option == 2) {
                 System.out.println("opt 2");
