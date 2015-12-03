@@ -156,6 +156,7 @@ public class NineMensMorrisGame {
         updateInfo();
     }
 
+    //TODO fix the bug when mill occurs.
     private void updateInfo() {
         int turn = rules.getTurn();
         if(turn == NineMenMorrisRules.BLUE_MOVES) {
