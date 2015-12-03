@@ -263,29 +263,33 @@ public class MainActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        Log.i("123", "got here");
+        Log.i("OPT", "onActivityResult method.");
 
         if (resultCode == RESULT_OK && requestCode == 200) {
             int option = data.getExtras().getInt("option");
             if(option == 1) {
-                System.out.println("opt 1");
-                Log.i("123", "in option 1");
+                Log.i("OPT", "Restart selected in preferences");
+
                 // Delete files holding state information
                 File dir = getFilesDir();
-                Log.i("123", dir.toString());
                 File game_state = new File(dir, "game_state");
                 File view_state = new File(dir, "view_state");
-                boolean s = game_state.delete();
-                Log.i("123", "deleting file game_state: " + s);
-                s = view_state.delete();
-                Log.i("123", "deleting file view_state: " + s);
+                boolean successDeleteGameState = game_state.delete();
+                boolean successDeleteViewState = view_state.delete();
+
+                Log.i("OPT", "Deleted file game_state: " + successDeleteGameState);
+                Log.i("OPT", "Deleted file view_state: " + successDeleteViewState);
 
                 restart();
             }
             else if(option == 2) {
-                System.out.println("opt 2");
+                Log.i("OPT", "Option 2 selected in preferences");
+
+
             } else if(option == 3) {
-                System.out.println("opt 3");
+                Log.i("OPT", "Option 3 selected in preferences");
+
+
             }
         }
 
