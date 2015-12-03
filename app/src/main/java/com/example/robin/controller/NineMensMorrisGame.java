@@ -52,7 +52,7 @@ public class NineMensMorrisGame {
 
         // Phase 1: Placing pieces
         int turnsLeftFaceOne = rules.getBluemarker() + rules.getBluemarker();
-        if(turnsLeftFaceOne > 0) {
+        if(turnsLeftFaceOne >= 0) {
             addMarkerToBoard(x, y);
         }
 
@@ -117,6 +117,9 @@ public class NineMensMorrisGame {
                 if(pointFrom == null || pointTo == null)
                     return;
 
+                System.out.println("from: " + pointFrom.getNumber());
+                System.out.println("to: " + pointTo.getNumber());
+
                 boolean isLegal = rules.legalMove(pointTo.getNumber(), pointFrom.getNumber(), rules.getTurn());
                 System.out.println("isLegal: " + isLegal);
                 if(isLegal) {
@@ -129,13 +132,13 @@ public class NineMensMorrisGame {
                     lastTouchedChecker = null;
 
                     System.out.println("moved to: " + pointTo.getNumber());
-
                 }
             }
         }
     }
 
     private void addMarkerToBoard(float x, float y) {
+
         Point p = getPoint(x, y);
         if(p == null)
             return;
@@ -145,7 +148,6 @@ public class NineMensMorrisGame {
             boolean isLegalRemove = rules.remove(p.getNumber(), rules.getTurn() + 3);
             System.out.println("isLegalRemove: " + isLegalRemove);
             if(isLegalRemove) {
-                System.out.println("GOT FUCKINGH ERE DIE");
                 int index = getCheckerOnPoint(p);
                 board.getCheckers().remove(index);
 //                checkers.remove(index);

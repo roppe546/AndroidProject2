@@ -35,8 +35,8 @@ public class NineMenMorrisRules implements Parcelable {
 
 	public NineMenMorrisRules() {
 		gameplan = new int[25]; // zeroes
-		bluemarker = 9;
-		redmarker = 9;
+		bluemarker = 8;
+		redmarker = 8;
 		turn = RED_MOVES;
 	}
 
@@ -47,6 +47,7 @@ public class NineMenMorrisRules implements Parcelable {
 		if (color == turn) {
 			if (turn == RED_MOVES) {
 				if (redmarker >= 0) {
+					System.out.println("I don't check if valid move");
 					if (gameplan[To] == EMPTY_SPACE) {
 						gameplan[To] = RED_MARKER;
 						gameplan[From] = EMPTY_SPACE; // SLACKERJÄVLAR
@@ -57,6 +58,7 @@ public class NineMenMorrisRules implements Parcelable {
 				}
 				/*else*/
 				if (gameplan[To] == EMPTY_SPACE) {
+					System.out.println("I check if valid move");
 					boolean valid = isValidMove(To, From);
 					if (valid == true) {
 						gameplan[To] = RED_MARKER;
@@ -71,6 +73,7 @@ public class NineMenMorrisRules implements Parcelable {
 				}
 			} else {
 				if (bluemarker >= 0) {
+					System.out.println("I don't check if valid move");
 					if (gameplan[To] == EMPTY_SPACE) {
 						gameplan[To] = BLUE_MARKER;
                         gameplan[From] = EMPTY_SPACE; // SLACKERJÄVLAR
@@ -80,6 +83,7 @@ public class NineMenMorrisRules implements Parcelable {
 					}
 				}
 				if (gameplan[To] == EMPTY_SPACE) {
+					System.out.println("I check if valid move");
 					boolean valid = isValidMove(To, From);
 					if (valid == true) {
 						gameplan[To] = BLUE_MARKER;
