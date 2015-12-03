@@ -8,7 +8,6 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
-import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
@@ -17,9 +16,6 @@ import android.widget.Toast;
 import java.util.ArrayList;
 
 import com.example.robin.controller.NineMensMorrisGame;
-import com.example.robin.model.Board;
-import com.example.robin.model.Checker;
-import com.example.robin.model.Point;
 
 /**
  * Created by Robin on 2015-12-01.
@@ -28,10 +24,10 @@ public class NineMensMorrisView extends View {
 
     private Bitmap background;
 
-    private Drawable blue;
-    private Drawable green;
-    private Drawable yellow;
-    private Drawable red;
+//    private Drawable blue;
+//    private Drawable green;
+//    private Drawable yellow;
+//    private Drawable red;
 
     private NineMensMorrisGame game;
     private Board board;
@@ -42,10 +38,10 @@ public class NineMensMorrisView extends View {
         super(context, attrs);
 
         background = BitmapFactory.decodeResource(context.getResources(), R.drawable.background);
-        red = context.getResources().getDrawable(R.drawable.red);
-        yellow = context.getResources().getDrawable(R.drawable.yellow);
-        blue = context.getResources().getDrawable(R.drawable.blue);
-        green = context.getResources().getDrawable(R.drawable.green);
+//        red = context.getResources().getDrawable(R.drawable.red);
+//        yellow = context.getResources().getDrawable(R.drawable.yellow);
+//        blue = context.getResources().getDrawable(R.drawable.blue);
+//        green = context.getResources().getDrawable(R.drawable.green);
 
     }
 
@@ -120,6 +116,8 @@ public class NineMensMorrisView extends View {
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
 
+        System.out.println("ASD : on draw");
+
         canvas.drawBitmap(background, 0, 0, null);
 
         // Create board points
@@ -138,7 +136,7 @@ public class NineMensMorrisView extends View {
 
             Rect imageBounds = canvas.getClipBounds();  // Adjust this for where you want it
 
-            red.draw(canvas);
+//            red.draw(canvas);
 
 
             //bugfixing
@@ -184,11 +182,14 @@ public class NineMensMorrisView extends View {
         board.setCheckers(checkers);
 
         // Draw checkers
+        Paint checkerPaint = new Paint();
+        paint.setStyle(Paint.Style.FILL);
         for (Checker currentChecker : checkers) {
             float x = currentChecker.getX();
             float y = currentChecker.getY();
             float radius = currentChecker.getRadius();
-            Paint checkerPaint = currentChecker.getPaint();
+//            Paint checkerPaint = currentChecker.getPaint();
+            checkerPaint.setColor(currentChecker.getColor());
 
             canvas.drawCircle(x, y, radius, checkerPaint);
 

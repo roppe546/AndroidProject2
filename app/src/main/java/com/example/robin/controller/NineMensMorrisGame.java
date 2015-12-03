@@ -4,17 +4,15 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.util.Log;
 import android.view.MotionEvent;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.robin.model.Board;
-import com.example.robin.model.Checker;
-import com.example.robin.model.Point;
+import com.example.robin.test.Board;
+import com.example.robin.test.Checker;
+import com.example.robin.test.Point;
 import com.example.robin.test.MainActivity;
 import com.example.robin.test.NineMensMorrisView;
 
 import com.example.robin.model.NineMenMorrisRules;
-import com.example.robin.test.R;
 
 import java.util.List;
 
@@ -42,8 +40,8 @@ public class NineMensMorrisGame {
         this.rules = new NineMenMorrisRules();
         this.activity = activity;
 
-        board = new Board();
-        view.initialize(board, this);
+        board = new Board();            // Initialize two lists (for checkers and points)
+        view.initialize(board, this);   // Make view aware of the board and the controller (this)
 
         lastTouchedChecker = null;
         activity.updateUI(prepareString());
@@ -266,10 +264,12 @@ public class NineMensMorrisGame {
     private int getMarkerTurn(Point point) {
 
         int index = getCheckerOnPoint(point);
-        Paint paint = board.getCheckers().get(index).getPaint();
+//        Paint paint = board.getCheckers().get(index).getPaint();
 
-        if(paint.getColor() == Color.RED)
+        if (board.getCheckers().get(index).getColor() == Color.RED) {
+//        if(paint.getColor() == Color.RED) {
             return NineMenMorrisRules.BLUE_MOVES;
+        }
 
         return NineMenMorrisRules.RED_MOVES;
     }

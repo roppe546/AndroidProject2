@@ -1,19 +1,22 @@
-package com.example.robin.model;
+package com.example.robin.test;
 
 import android.graphics.Paint;
 import android.os.Parcel;
 import android.os.Parcelable;
+
+import java.io.Serializable;
 
 /**
  * This class represents a man (checker) in the Nine Men's Morris game.
  *
  * Created by Robin on 2015-12-01.
  */
-public class Checker implements Parcelable {
+public class Checker implements Parcelable, Serializable {
     private float x;
     private float y;
     private float radius;
-    private Paint paint;
+//    private Paint paint;
+    private int color;
     private boolean selected;
     private int onPoint;
 
@@ -24,9 +27,10 @@ public class Checker implements Parcelable {
         this.x = x;
         this.y = y;
         this.radius = radius;
-        this.paint = new Paint();
-        this.paint.setColor(color);
-        this.paint.setStyle(Paint.Style.FILL);
+//        this.paint = new Paint();
+//        this.paint.setColor(color);
+//        this.paint.setStyle(Paint.Style.FILL);
+        this.color = color;
         this.selected = false;
     }
 
@@ -40,7 +44,7 @@ public class Checker implements Parcelable {
         dest.writeFloat(this.x);
         dest.writeFloat(this.y);
         dest.writeFloat(this.radius);
-        dest.writeInt(this.paint.getColor());
+//        dest.writeInt(this.paint.getColor());
 
         if (selected) {
             dest.writeBooleanArray(new boolean[1]);
@@ -77,12 +81,20 @@ public class Checker implements Parcelable {
         this.radius = radius;
     }
 
-    public Paint getPaint() {
-        return paint;
+//    public Paint getPaint() {
+//        return paint;
+//    }
+//
+//    public void setPaint(Paint paint) {
+//        this.paint = paint;
+//    }
+
+    public int getColor() {
+        return color;
     }
 
-    public void setPaint(Paint paint) {
-        this.paint = paint;
+    public void setColor(int color) {
+        this.color = color;
     }
 
     public boolean isSelected() {

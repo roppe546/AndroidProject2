@@ -317,4 +317,14 @@ public class NineMenMorrisRules implements Parcelable {
 		dest.writeInt(redmarker);
 		dest.writeInt(turn);
 	}
+
+	public String returnGamePlanString() {
+		StringBuilder sb = new StringBuilder("");
+
+		for (int i = 0; i < gameplan.length; i++) {
+			sb.append(gameplan[i] + " ");
+		}
+
+		return sb.toString();
+	}
 }
