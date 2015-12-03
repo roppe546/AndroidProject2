@@ -147,13 +147,13 @@ public class NineMensMorrisView extends View {
         canvas.drawRect(inner, paint);
 
         // Draw lines on board
-        canvas.drawLine(points.get(0).getX(), points.get(0).getY(), points.get(2).getX(), points.get(2).getY(), paint);
+//        canvas.drawLine(points.get(0).getX(), points.get(0).getY(), points.get(2).getX(), points.get(2).getY(), paint);
         canvas.drawLine(points.get(3).getX(), points.get(3).getY(), points.get(5).getX(), points.get(5).getY(), paint);
-        canvas.drawLine(points.get(6).getX(), points.get(6).getY(), points.get(8).getX(), points.get(8).getY(), paint);
+//        canvas.drawLine(points.get(6).getX(), points.get(6).getY(), points.get(8).getX(), points.get(8).getY(), paint);
         canvas.drawLine(points.get(9).getX(), points.get(9).getY(), points.get(11).getX(), points.get(11).getY(), paint);
-        canvas.drawLine(points.get(12).getX(), points.get(12).getY(), points.get(14).getX(), points.get(14).getY(), paint);
+//        canvas.drawLine(points.get(12).getX(), points.get(12).getY(), points.get(14).getX(), points.get(14).getY(), paint);
         canvas.drawLine(points.get(15).getX(), points.get(15).getY(), points.get(17).getX(), points.get(17).getY(), paint);
-        canvas.drawLine(points.get(18).getX(), points.get(18).getY(), points.get(20).getX(), points.get(20).getY(), paint);
+//        canvas.drawLine(points.get(18).getX(), points.get(18).getY(), points.get(20).getX(), points.get(20).getY(), paint);
         canvas.drawLine(points.get(21).getX(), points.get(21).getY(), points.get(23).getX(), points.get(23).getY(), paint);
 
         // Put checkers in correct positions

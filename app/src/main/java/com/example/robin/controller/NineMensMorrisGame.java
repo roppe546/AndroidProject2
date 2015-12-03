@@ -1,6 +1,7 @@
 package com.example.robin.controller;
 
 import android.graphics.Color;
+import android.graphics.Paint;
 import android.util.Log;
 import android.view.MotionEvent;
 
@@ -120,7 +121,10 @@ public class NineMensMorrisGame {
                 System.out.println("from: " + pointFrom.getNumber());
                 System.out.println("to: " + pointTo.getNumber());
 
-                boolean isLegal = rules.legalMove(pointTo.getNumber(), pointFrom.getNumber(), rules.getTurn());
+                int nextMove = getMarkerTurn(pointFrom);
+
+                System.out.println("next move: " +nextMove);
+                boolean isLegal = rules.legalMove(pointTo.getNumber(), pointFrom.getNumber(), nextMove);
                 System.out.println("isLegal: " + isLegal);
                 if(isLegal) {
                     lastTouchedChecker.setX(pointTo.getX());
@@ -223,6 +227,17 @@ public class NineMensMorrisGame {
 
     public Board getBoard() {
         return this.board;
+    }
+
+    private int getMarkerTurn(Point point) {
+
+        int index = getCheckerOnPoint(point);
+        Paint paint = board.getCheckers().get(index).getPaint();
+
+        if(paint.getColor() == Color.RED)
+            return NineMenMorrisRules.BLUE_MOVES;
+
+        return NineMenMorrisRules.RED_MOVES;
     }
 
     public NineMenMorrisRules getRules() {
