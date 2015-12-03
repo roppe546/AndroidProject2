@@ -194,17 +194,12 @@ public class NineMenMorrisRules implements Parcelable {
 
     public boolean lose(int color) {
         int countMarker = 0;
-//        int count = 0;
 
         for (int i = 0; i < gameplan.length; i++) {
             if(gameplan[i] == color)
                 countMarker++;
         }
-//        while (count < 23) {
-//            if (gameplan[count] != EMPTY_SPACE && gameplan[count] != color)
-//                countMarker++;
-//            count++;
-//        }
+
         if (bluemarker <= 0 && redmarker <= 0 && countMarker < 3)
             return true;
         else

@@ -49,7 +49,6 @@ public class NineMensMorrisGame {
         // Get touch coordinates
         float x = event.getX();
         float y = event.getY();
-//        Toast.makeText(context, "Coordinates: x: " + x + ", y: " + y, Toast.LENGTH_SHORT).show();
 
         // Phase 1: Placing pieces
         int turnsLeftFaceOne = rules.getBluemarker() + rules.getBluemarker();
@@ -79,7 +78,6 @@ public class NineMensMorrisGame {
             if(isLegalRemove) {
                 int index = getCheckerOnPoint(p);
                 board.getCheckers().remove(index);
-//                checkers.remove(index);
                 removeChecker = false;
                 return;
             }
@@ -104,21 +102,6 @@ public class NineMensMorrisGame {
                     break;
                 }
             }
-//            for (Checker current : checkers) {
-//                float currentX = current.getX();
-//                float currentY = current.getY();
-//                float radius = current.getRadius();
-//
-//                if ((x >= currentX - radius) && (x <= currentX + radius) && (y >= currentY - radius) && (y <= currentY + radius)) {
-//                    Log.i("TOUCH", "Touched checker.");
-//
-//                    // Register checker as touched, so it will move to new position on next touch
-//                    lastTouchedChecker = current;
-//                    lastTouchedChecker.setSelected(true);
-//
-//                    break;
-//                }
-//            }
         }
 
         // A checker was previously selected
@@ -144,14 +127,9 @@ public class NineMensMorrisGame {
                 if(pointFrom == null || pointTo == null)
                     return;
 
-//                System.out.println("from: " + pointFrom.getNumber());
-//                System.out.println("to: " + pointTo.getNumber());
-
                 int nextMove = getMarkerTurn(pointFrom);
 
-//                System.out.println("next move: " +nextMove);
                 boolean isLegal = rules.legalMove(pointTo.getNumber(), pointFrom.getNumber(), nextMove);
-//                System.out.println("isLegal: " + isLegal);
                 if(isLegal) {
                     lastTouchedChecker.setX(pointTo.getX());
                     lastTouchedChecker.setY(pointTo.getY());
@@ -161,10 +139,7 @@ public class NineMensMorrisGame {
                     lastTouchedChecker.setOnPoint(pointTo.getNumber());
                     lastTouchedChecker = null;
 
-//                    System.out.println("moved to: " + pointTo.getNumber());
-
                     boolean isRemove = rules.remove(pointTo.getNumber());
-                    System.out.println("isRemove: " + isRemove);
                     if(isRemove) {
                         removeChecker = true;
                     }
@@ -182,11 +157,9 @@ public class NineMensMorrisGame {
         // Removing if we got mill
         if(removeChecker) {
             boolean isLegalRemove = rules.remove(p.getNumber(), rules.getTurn() + 3);
-            System.out.println("isLegalRemove: " + isLegalRemove);
             if(isLegalRemove) {
                 int index = getCheckerOnPoint(p);
                 board.getCheckers().remove(index);
-//                checkers.remove(index);
                 removeChecker = false;
                 return;
             }
@@ -198,13 +171,9 @@ public class NineMensMorrisGame {
             newChecker.setOnPoint(p.getNumber());
 
             board.getCheckers().add(newChecker);
-//            checkers.add(newChecker);
-//            System.out.println("Checkers size: " + board.getCheckers().size());
-//            turn++;
         }
 
         boolean isRemove = rules.remove(p.getNumber());
-        System.out.println("isRemove: " + isRemove);
         if(isRemove) {
             removeChecker = true;
         }
@@ -233,11 +202,8 @@ public class NineMensMorrisGame {
 
         int returnIndex = 0;
         for (int i = 0; i < board.getCheckers().size(); i++) {
-//        for (int i = 0; i < checkers.size(); i++) {
             Checker currentChecker = board.getCheckers().get(i);
             if (point.getX() == currentChecker.getX() && point.getY() == currentChecker.getY()) {
-//            if(point.getX() == checkers.get(i).getX() && point.getY() == checkers.get(i).getY()) {
-//                System.out.println("getCheckerOnPoint found match!");
                 returnIndex = i;
                 break;
             }
@@ -249,7 +215,6 @@ public class NineMensMorrisGame {
     private int getTurn() {
 
         int intTurn = rules.getTurn();
-
         if(intTurn == NineMenMorrisRules.BLUE_MOVES)
             return Color.BLUE;
 
