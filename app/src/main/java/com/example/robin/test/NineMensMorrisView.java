@@ -32,6 +32,8 @@ public class NineMensMorrisView extends View {
     private Drawable green;
     private Drawable yellow;
     private Drawable red;
+    private Drawable grey;
+    private Drawable orange;
 
     private NineMensMorrisGame game;
     private Board board;
@@ -42,10 +44,12 @@ public class NineMensMorrisView extends View {
         super(context, attrs);
 
         background = BitmapFactory.decodeResource(context.getResources(), R.drawable.background);
-        red = context.getResources().getDrawable(R.drawable.red);
-        yellow = context.getResources().getDrawable(R.drawable.yellow);
-        blue = context.getResources().getDrawable(R.drawable.blue);
-        green = context.getResources().getDrawable(R.drawable.green);
+        red = context.getResources().getDrawable(R.drawable.circle_red);
+        yellow = context.getResources().getDrawable(R.drawable.circle_yellow);
+        blue = context.getResources().getDrawable(R.drawable.circle_blue);
+        green = context.getResources().getDrawable(R.drawable.circle_green);
+        grey = context.getResources().getDrawable(R.drawable.circle_grey);
+        orange = context.getResources().getDrawable(R.drawable.circle_orange);
 
     }
 
