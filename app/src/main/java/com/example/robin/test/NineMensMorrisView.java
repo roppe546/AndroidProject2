@@ -30,6 +30,7 @@ public class NineMensMorrisView extends View {
     private NineMensMorrisGame game;
     private Board board;
     private Checker lastTouchedChecker;
+    private float preferredRadius = -1;
 
     public NineMensMorrisView(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -212,7 +213,15 @@ public class NineMensMorrisView extends View {
         this.lastTouchedChecker = lastTouchedChecker;
     }
 
-    public int getPreferredRadius() {
-        return this.getWidth() / 24;
+    public float getPreferredRadius() {
+        if (preferredRadius == -1) {
+            preferredRadius = this.getWidth() / 24;
+        }
+
+        return preferredRadius;
+    }
+
+    public void setPreferredRadius(float preferredRadius) {
+        this.preferredRadius = preferredRadius;
     }
 }

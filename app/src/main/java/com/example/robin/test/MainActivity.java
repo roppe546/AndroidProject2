@@ -51,6 +51,9 @@ public class MainActivity extends AppCompatActivity {
         ArrayList<Checker> checkers = savedInstanceState.getParcelableArrayList("checkerInformation");
         NineMenMorrisRules rules = savedInstanceState.getParcelable("currentGameState");
 
+        // Set point radius
+        view.setPreferredRadius(savedInstanceState.getFloat("pointRadius"));
+
         // Set game state to its previous state
         game.getRules().setGameplan(rules.getGameplan());
         game.getRules().setBluemarker(rules.getBluemarker());
@@ -78,6 +81,7 @@ public class MainActivity extends AppCompatActivity {
 
         savedInstanceState.putParcelableArrayList("checkerInformation", checkers);
         savedInstanceState.putParcelable("currentGameState", rules);
+        savedInstanceState.putFloat("pointRadius", view.getPreferredRadius());
     }
 
     @Override
