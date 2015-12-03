@@ -120,7 +120,7 @@ public class MainActivity extends AppCompatActivity {
 
         if (itemId == R.id.settingsButton) {
             Log.i("ActionMenu", "Selected Settings in menu");
-            startActivity(new Intent(this, SettingsActivity.class));
+            startActivityForResult(new Intent(this, SettingsActivity.class), 200);
         }
 
         return super.onOptionsItemSelected(item);
@@ -257,7 +257,6 @@ public class MainActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
         }
-
     }
 
     @Override
@@ -269,6 +268,7 @@ public class MainActivity extends AppCompatActivity {
         if (resultCode == RESULT_OK && requestCode == 200) {
             int option = data.getExtras().getInt("option");
             if(option == 1) {
+                System.out.println("opt 1");
                 Log.i("123", "in option 1");
                 // Delete files holding state information
                 File dir = getFilesDir();
@@ -295,6 +295,7 @@ public class MainActivity extends AppCompatActivity {
     private void restart() {
         info = (TextView) findViewById(R.id.textView);
         view = (NineMensMorrisView) findViewById(R.id.nineMensMorrisView);
+        game = new NineMensMorrisGame(view, this);  // Create controller, initialize board, make view aware of controller
         view.invalidate();
     }
 }
