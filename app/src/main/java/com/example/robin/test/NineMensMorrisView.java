@@ -54,15 +54,15 @@ public class NineMensMorrisView extends View {
             x = screenWidth / 2;
             y = screenHeight / 2;
 
-            x1 = screenWidth / 14;
-            y1 = screenWidth / 14;
+            x1 = screenWidth / 18;
+            y1 = screenWidth / 18;
         }
         else {
             x = screenWidth / 2;
             y = screenHeight / 2;
 
-            x1 = screenWidth / 8;
-            y1 = screenWidth / 8;
+            x1 = screenWidth / 6;
+            y1 = screenWidth / 6;
         }
 
         int number = 1;
