@@ -67,34 +67,35 @@ public class NineMensMorrisView extends View {
 
         int number = 1;
 
+        float radius = getPreferredRadius();
         ArrayList<Point> points = board.getPoints();
         for (int i = 0; i < 8; i++) {
             int factor = 1;
             for (int j = 0; j < 3; j++) {
                 if (i == 0) {
-                    points.add(new Point(x - x1 * factor, y - y1 * factor));
+                    points.add(new Point(x - x1 * factor, y - y1 * factor, radius));
                 }
                 else if (i == 1) {
-                    points.add(new Point(x, y - y1 * factor));
+                    points.add(new Point(x, y - y1 * factor, radius));
                 }
                 else if (i == 2) {
-                    points.add(new Point(x + x1 * factor, y - y1 * factor));
+                    points.add(new Point(x + x1 * factor, y - y1 * factor, radius));
                 }
                 else if (i == 3) {
-                    points.add(new Point(x + x1 * factor, y));
+                    points.add(new Point(x + x1 * factor, y, radius));
                 }
                 else if (i == 4) {
-                    points.add(new Point(x + x1 * factor, y + y1 * factor));
+                    points.add(new Point(x + x1 * factor, y + y1 * factor, radius));
                 }
                 else if (i == 5) {
-                    points.add(new Point(x, y + y1 * factor));
+                    points.add(new Point(x, y + y1 * factor, radius));
                 }
                 else if (i == 6) {
-                    points.add(new Point(x - x1 * factor, y + y1 * factor));
+                    points.add(new Point(x - x1 * factor, y + y1 * factor, radius));
                 }
                 // i == 7
                 else {
-                    points.add(new Point(x - x1 * factor, y));
+                    points.add(new Point(x - x1 * factor, y, radius));
                 }
 
                 points.get(number - 1).setNumber(number++);
@@ -209,5 +210,9 @@ public class NineMensMorrisView extends View {
 
     public void setLastTouchedChecker(Checker lastTouchedChecker) {
         this.lastTouchedChecker = lastTouchedChecker;
+    }
+
+    public int getPreferredRadius() {
+        return this.getWidth() / 24;
     }
 }

@@ -189,7 +189,7 @@ public class NineMensMorrisGame {
 
         boolean isLegal = rules.legalMove(p.getNumber(), 0, rules.getTurn());
         if(isLegal) {
-            Checker newChecker = new Checker(p.getX(), p.getY(), 50, getTurn());
+            Checker newChecker = new Checker(p.getX(), p.getY(), view.getPreferredRadius(), getTurn());
             newChecker.setOnPoint(p.getNumber());
 
             board.getCheckers().add(newChecker);

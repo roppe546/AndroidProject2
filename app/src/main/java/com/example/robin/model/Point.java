@@ -15,10 +15,10 @@ public class Point {
     private Paint paint;
     private int number;
 
-    public Point(float x, float y) {
+    public Point(float x, float y, float radius) {
         this.x = x;
         this.y = y;
-        this.radius = 20;
+        this.radius = radius;
         this.paint = new Paint();
         this.paint.setColor(Color.BLACK);
         this.paint.setStyle(Paint.Style.FILL);
