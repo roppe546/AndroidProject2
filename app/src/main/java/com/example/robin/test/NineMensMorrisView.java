@@ -42,7 +42,8 @@ public class NineMensMorrisView extends View {
     private Checker lastTouchedChecker;
     private float preferredRadius = -1;
 
-    private String color = "green";
+    private String player1color = "red";
+    private String player2color = "blue";
 
     public NineMensMorrisView(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -190,42 +191,68 @@ public class NineMensMorrisView extends View {
             Paint checkerPaint = new Paint();
             checkerPaint.setColor(currentChecker.getColor());
 
-//            canvas.drawCircle(x, y, radius, checkerPaint);
-
-            if(color.equals("blue")) {
-                Bitmap blue = BitmapFactory.decodeResource(getResources(), R.drawable.circle_blue);
-                Bitmap resizedBitmap = Bitmap.createScaledBitmap(blue, 130, 130, false);
-                canvas.drawBitmap(resizedBitmap, x - 65, y - 65, null);
-            } else if(color.equals("green")) {
-                Bitmap blue = BitmapFactory.decodeResource(getResources(), R.drawable.circle_green);
-                Bitmap resizedBitmap = Bitmap.createScaledBitmap(blue, 130, 130, false);
-                canvas.drawBitmap(resizedBitmap, x - 65, y - 65, null);
-            } else if(color.equals("grey")) {
-                Bitmap blue = BitmapFactory.decodeResource(getResources(), R.drawable.circle_grey);
-                Bitmap resizedBitmap = Bitmap.createScaledBitmap(blue, 130, 130, false);
-                canvas.drawBitmap(resizedBitmap, x - 65, y - 65, null);
-            } else if(color.equals("orange")) {
-                Bitmap blue = BitmapFactory.decodeResource(getResources(), R.drawable.circle_orange);
-                Bitmap resizedBitmap = Bitmap.createScaledBitmap(blue, 130, 130, false);
-                canvas.drawBitmap(resizedBitmap, x - 65, y - 65, null);
-            } else if(color.equals("red")) {
-                Bitmap blue = BitmapFactory.decodeResource(getResources(), R.drawable.circle_red);
-                Bitmap resizedBitmap = Bitmap.createScaledBitmap(blue, 130, 130, false);
-                canvas.drawBitmap(resizedBitmap, x - 65, y - 65, null);
-            } else if(color.equals("yellow")) {
-                Bitmap blue = BitmapFactory.decodeResource(getResources(), R.drawable.circle_yellow);
-                Bitmap resizedBitmap = Bitmap.createScaledBitmap(blue, 130, 130, false);
-                canvas.drawBitmap(resizedBitmap, x - 65, y - 65, null);
+            if(currentChecker.getColor() == Color.RED) {
+                if (player1color.equals("blue")) {
+                    Bitmap blue = BitmapFactory.decodeResource(getResources(), R.drawable.circle_blue);
+                    Bitmap resizedBitmap = Bitmap.createScaledBitmap(blue, 130, 130, false);
+                    canvas.drawBitmap(resizedBitmap, x - 65, y - 65, null);
+                } else if (player1color.equals("green")) {
+                    Bitmap blue = BitmapFactory.decodeResource(getResources(), R.drawable.circle_green);
+                    Bitmap resizedBitmap = Bitmap.createScaledBitmap(blue, 130, 130, false);
+                    canvas.drawBitmap(resizedBitmap, x - 65, y - 65, null);
+                } else if (player1color.equals("grey")) {
+                    Bitmap blue = BitmapFactory.decodeResource(getResources(), R.drawable.circle_grey);
+                    Bitmap resizedBitmap = Bitmap.createScaledBitmap(blue, 130, 130, false);
+                    canvas.drawBitmap(resizedBitmap, x - 65, y - 65, null);
+                } else if (player1color.equals("orange")) {
+                    Bitmap blue = BitmapFactory.decodeResource(getResources(), R.drawable.circle_orange);
+                    Bitmap resizedBitmap = Bitmap.createScaledBitmap(blue, 130, 130, false);
+                    canvas.drawBitmap(resizedBitmap, x - 65, y - 65, null);
+                } else if (player1color.equals("red")) {
+                    Bitmap blue = BitmapFactory.decodeResource(getResources(), R.drawable.circle_red);
+                    Bitmap resizedBitmap = Bitmap.createScaledBitmap(blue, 130, 130, false);
+                    canvas.drawBitmap(resizedBitmap, x - 65, y - 65, null);
+                } else if (player1color.equals("yellow")) {
+                    Bitmap blue = BitmapFactory.decodeResource(getResources(), R.drawable.circle_yellow);
+                    Bitmap resizedBitmap = Bitmap.createScaledBitmap(blue, 130, 130, false);
+                    canvas.drawBitmap(resizedBitmap, x - 65, y - 65, null);
+                }
+            } else {
+                if (player2color.equals("blue")) {
+                    Bitmap blue = BitmapFactory.decodeResource(getResources(), R.drawable.circle_blue);
+                    Bitmap resizedBitmap = Bitmap.createScaledBitmap(blue, 130, 130, false);
+                    canvas.drawBitmap(resizedBitmap, x - 65, y - 65, null);
+                } else if (player2color.equals("green")) {
+                    Bitmap blue = BitmapFactory.decodeResource(getResources(), R.drawable.circle_green);
+                    Bitmap resizedBitmap = Bitmap.createScaledBitmap(blue, 130, 130, false);
+                    canvas.drawBitmap(resizedBitmap, x - 65, y - 65, null);
+                } else if (player2color.equals("grey")) {
+                    Bitmap blue = BitmapFactory.decodeResource(getResources(), R.drawable.circle_grey);
+                    Bitmap resizedBitmap = Bitmap.createScaledBitmap(blue, 130, 130, false);
+                    canvas.drawBitmap(resizedBitmap, x - 65, y - 65, null);
+                } else if (player2color.equals("orange")) {
+                    Bitmap blue = BitmapFactory.decodeResource(getResources(), R.drawable.circle_orange);
+                    Bitmap resizedBitmap = Bitmap.createScaledBitmap(blue, 130, 130, false);
+                    canvas.drawBitmap(resizedBitmap, x - 65, y - 65, null);
+                } else if (player2color.equals("red")) {
+                    Bitmap blue = BitmapFactory.decodeResource(getResources(), R.drawable.circle_red);
+                    Bitmap resizedBitmap = Bitmap.createScaledBitmap(blue, 130, 130, false);
+                    canvas.drawBitmap(resizedBitmap, x - 65, y - 65, null);
+                } else if (player2color.equals("yellow")) {
+                    Bitmap blue = BitmapFactory.decodeResource(getResources(), R.drawable.circle_yellow);
+                    Bitmap resizedBitmap = Bitmap.createScaledBitmap(blue, 130, 130, false);
+                    canvas.drawBitmap(resizedBitmap, x - 65, y - 65, null);
+                }
             }
 
             // Put stroke around circle if selected
             if (currentChecker.isSelected()) {
                 checkerPaint = new Paint();
                 checkerPaint.setAntiAlias(true);
-                checkerPaint.setColor(Color.CYAN);
+                checkerPaint.setColor(Color.WHITE);
                 checkerPaint.setStrokeWidth(10);
                 checkerPaint.setStyle(Paint.Style.STROKE);
-                canvas.drawCircle(x, y, radius, checkerPaint);
+                canvas.drawCircle(x, y, 60, checkerPaint);
             }
         }
     }

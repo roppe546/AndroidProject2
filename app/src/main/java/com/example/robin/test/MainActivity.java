@@ -288,7 +288,6 @@ public class MainActivity extends AppCompatActivity {
                 System.out.println("opt 3");
             }
         }
-
     }
 
     private void restart() {
