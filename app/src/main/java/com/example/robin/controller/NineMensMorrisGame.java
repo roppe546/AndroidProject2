@@ -30,8 +30,6 @@ public class NineMensMorrisGame {
     private NineMensMorrisView view;
     private NineMenMorrisRules rules;
 
-    private TextView info;
-
     private Board board;
     private Checker lastTouchedChecker;
 
@@ -50,7 +48,6 @@ public class NineMensMorrisGame {
         lastTouchedChecker = null;
         activity.updateUI(prepareString());
     }
-
 
     // TODO: make game.newEvent return true or false, if it returns true, that means something changed, so we can invalidate,
     // TODO: don't invalidate if false. this to not do uneccesary redraws on every click

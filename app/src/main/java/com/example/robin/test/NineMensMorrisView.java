@@ -8,6 +8,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
+import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
@@ -27,6 +28,11 @@ public class NineMensMorrisView extends View {
 
     private Bitmap background;
 
+    private Drawable blue;
+    private Drawable green;
+    private Drawable yellow;
+    private Drawable red;
+
     private NineMensMorrisGame game;
     private Board board;
     private Checker lastTouchedChecker;
@@ -36,6 +42,11 @@ public class NineMensMorrisView extends View {
         super(context, attrs);
 
         background = BitmapFactory.decodeResource(context.getResources(), R.drawable.background);
+        red = context.getResources().getDrawable(R.drawable.red);
+        yellow = context.getResources().getDrawable(R.drawable.yellow);
+        blue = context.getResources().getDrawable(R.drawable.blue);
+        green = context.getResources().getDrawable(R.drawable.green);
+
     }
 
     public void initialize(Board board, NineMensMorrisGame game) {
@@ -123,7 +134,12 @@ public class NineMensMorrisView extends View {
             float radius = currentPoint.getRadius();
             Paint checkerPaint = currentPoint.getPaint();
 
-            canvas.drawCircle(x, y, radius, checkerPaint);
+//            canvas.drawCircle(x, y, radius, checkerPaint);
+
+            Rect imageBounds = canvas.getClipBounds();  // Adjust this for where you want it
+
+            red.draw(canvas);
+
 
             //bugfixing
 //            checkerPaint.setTextSize(75);

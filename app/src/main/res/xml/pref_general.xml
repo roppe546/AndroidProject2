@@ -3,10 +3,12 @@
         android:key="restart"
         android:title="Restart game">
     </Preference>
-    <!--<Preference-->
-        <!--android:key="Pref1"-->
-        <!--android:title="Preference 1">
-        </Preference>-->
+
+    <Preference
+        android:key="three"
+        android:title="New three men's morris game">
+    </Preference>
+
     <!--<Preference-->
         <!--android:key="Pref2"-->
         <!--android:title="Preference 2">

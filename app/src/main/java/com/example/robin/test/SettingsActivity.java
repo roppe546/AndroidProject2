@@ -37,7 +37,20 @@ public class SettingsActivity extends Activity {
                 public boolean onPreferenceClick(Preference preference) {
 
                     Intent data = new Intent();
-                    data.putExtra("isRestart", true);
+                    data.putExtra("option", 1);
+                    getActivity().setResult(RESULT_OK, data);
+                    getActivity().finish();
+                    return false;
+                }
+            });
+
+            Preference three = findPreference("three");
+            three.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+                @Override
+                public boolean onPreferenceClick(Preference preference) {
+                    System.out.println("clicked three");
+                    Intent data = new Intent();
+                    data.putExtra("option", 2);
                     getActivity().setResult(RESULT_OK, data);
                     getActivity().finish();
                     return false;

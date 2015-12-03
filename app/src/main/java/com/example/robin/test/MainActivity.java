@@ -1,6 +1,5 @@
 package com.example.robin.test;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -107,16 +106,21 @@ public class MainActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
 
         if (resultCode == RESULT_OK && requestCode == 200) {
-            boolean isRestart = data.getExtras().getBoolean("isRestart");
-            if(isRestart)
+            int option = data.getExtras().getInt("option");
+            if(option == 1)
                 restart();
+            else if(option == 2) {
+                System.out.println("opt 2");
+            } else if(option == 3) {
+                System.out.println("opt 3");
+            }
         }
+
     }
 
     private void restart() {
         info = (TextView) findViewById(R.id.textView);
         view = (NineMensMorrisView) findViewById(R.id.nineMensMorrisView);
-        game = new NineMensMorrisGame(view, this);
         view.invalidate();
     }
 }
