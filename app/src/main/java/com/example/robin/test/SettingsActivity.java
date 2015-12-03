@@ -2,12 +2,9 @@ package com.example.robin.test;
 
 
 import android.app.Activity;
-import android.content.res.Configuration;
 import android.os.Bundle;
-import android.preference.PreferenceActivity;
 import android.preference.PreferenceFragment;
 
-import java.util.List;
 
 /**
  * Created by robin on 02/12/15.

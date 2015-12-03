@@ -1,8 +1,6 @@
 package com.example.robin.model;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * This class represents the board of a Nine Men's Morris game.

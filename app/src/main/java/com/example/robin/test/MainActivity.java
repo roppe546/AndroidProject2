@@ -1,22 +1,22 @@
 package com.example.robin.test;
 
+import android.app.Activity;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
 
 import com.example.robin.controller.NineMensMorrisGame;
 import com.example.robin.model.Checker;
+import com.example.robin.model.NineMenMorrisRules;
 import com.example.robin.model.Point;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends Activity {
 
     private NineMensMorrisGame game;
     private NineMensMorrisView view;
@@ -24,21 +24,11 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        System.out.println("hello");
-
         setContentView(R.layout.activity_main);
 
-        if (game == null) {
-            Log.i("ACT", "Game was null, creating new game.");
-            game = new NineMensMorrisGame(this, view);
-        }
-        if (view == null) {
-            Log.i("ACT", "View was null, creating new view.");
-            view = new NineMensMorrisView(this, game);
-        }
+        view = (NineMensMorrisView) findViewById(R.id.nineMensMorrisView);
 
-        setContentView(view);
+        game = new NineMensMorrisGame(view);
     }
 
     @Override
@@ -55,24 +45,32 @@ public class MainActivity extends AppCompatActivity {
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
 
-        Log.i("STATE", "Loading state from model");
+        Log.i("STATE", "Loading saved state");
 
         ArrayList<Checker> checkers = savedInstanceState.getParcelableArrayList("checkerInformation");
+        NineMenMorrisRules rules = savedInstanceState.getParcelable("currentGameState");
 
+        // Set game state to its previous state
+        game.getRules().setGameplan(rules.getGameplan());
+        game.getRules().setBluemarker(rules.getBluemarker());
+        game.getRules().setRedmarker(rules.getRedmarker());
+        game.getRules().setTurn(rules.getTurn());
+
+        // Set checkers in correct position
         game.getBoard().setCheckers(checkers);
-//        view.setCheckers(checkers);
     }
 
     @Override
     protected void onSaveInstanceState(Bundle savedInstanceState) {
         super.onSaveInstanceState(savedInstanceState);
 
-        Log.i("STATE", "Saving state from model");
+        Log.i("STATE", "Saving current state");
 
         ArrayList<Checker> checkers = game.getBoard().getCheckers();
-//        ArrayList<Checker> checkers = view.getCheckers();
+        NineMenMorrisRules rules = game.getRules();
 
         savedInstanceState.putParcelableArrayList("checkerInformation", checkers);
+        savedInstanceState.putParcelable("currentGameState", rules);
     }
 
     @Override

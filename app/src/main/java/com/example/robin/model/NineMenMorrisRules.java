@@ -1,5 +1,8 @@
 package com.example.robin.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 /**
  * @author Jonas W�hsl�n, jwi@kth.se. 
  * Revised by Anders Lindstr�m, anderslm@kth.se
@@ -18,7 +21,7 @@ package com.example.robin.model;
  * 
  */
 
-public class NineMenMorrisRules {
+public class NineMenMorrisRules implements Parcelable {
 	private int[] gameplan;
 	private int bluemarker, redmarker;
 	private int turn; // player in turn
@@ -254,5 +257,42 @@ public class NineMenMorrisRules {
 
 	public void setTurn(int turn) {
 		this.turn = turn;
+	}
+
+	public int[] getGameplan() {
+		return gameplan;
+	}
+
+	public void setGameplan(int[] gameplan) {
+		this.gameplan = gameplan;
+	}
+
+	public int getBluemarker() {
+		return bluemarker;
+	}
+
+	public void setBluemarker(int bluemarker) {
+		this.bluemarker = bluemarker;
+	}
+
+	public int getRedmarker() {
+		return redmarker;
+	}
+
+	public void setRedmarker(int redmarker) {
+		this.redmarker = redmarker;
+	}
+
+	@Override
+	public int describeContents() {
+		return 0;
+	}
+
+	@Override
+	public void writeToParcel(Parcel dest, int flags) {
+		dest.writeIntArray(gameplan);
+		dest.writeInt(bluemarker);
+		dest.writeInt(redmarker);
+		dest.writeInt(turn);
 	}
 }

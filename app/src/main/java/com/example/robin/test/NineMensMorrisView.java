@@ -1,6 +1,5 @@
 package com.example.robin.test;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
@@ -9,18 +8,12 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
-import android.graphics.drawable.GradientDrawable;
-import android.support.v7.widget.LinearLayoutCompat;
-import android.util.DisplayMetrics;
-import android.util.Log;
+import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.Toast;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.List;
 
 import com.example.robin.controller.NineMensMorrisGame;
 import com.example.robin.model.Board;
@@ -34,25 +27,20 @@ public class NineMensMorrisView extends View {
 
     private Bitmap background;
 
-
-    private Board board;
-
-
-//    private List<Point> points = new ArrayList<>();
-//    private ArrayList<Checker> checkers = new ArrayList<>();
-    private Checker lastTouchedChecker;
     private NineMensMorrisGame game;
+    private Board board;
+    private Checker lastTouchedChecker;
 
-    public NineMensMorrisView(Context context, NineMensMorrisGame game) {
-        super(context);
-        this.game = game;
+    public NineMensMorrisView(Context context, AttributeSet attrs) {
+        super(context, attrs);
 
         background = BitmapFactory.decodeResource(context.getResources(), R.drawable.background);
+    }
 
-        board = new Board();
-
-//        game.init(lastTouchedChecker, checkers, points);
-        game.init(board, lastTouchedChecker);
+    public void initialize(Board board, NineMensMorrisGame game) {
+        this.board = board;
+        this.game = game;
+        lastTouchedChecker = null;
     }
 
     private void createPoints() {

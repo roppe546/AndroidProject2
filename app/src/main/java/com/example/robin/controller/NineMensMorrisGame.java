@@ -1,6 +1,5 @@
 package com.example.robin.controller;
 
-import android.content.Context;
 import android.graphics.Color;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -25,34 +24,22 @@ public class NineMensMorrisGame {
 
     private NineMensMorrisView view;
     private NineMenMorrisRules rules;
-    private Context context;
 
     private Board board;
-
     private Checker lastTouchedChecker;
-//    private List<Checker> checkers;
-//    private List <Point> points;
 
     private boolean removeChecker = false;
 
-    private int turn = 0;
-
-    public NineMensMorrisGame(Context context, NineMensMorrisView view) {
-        this.context = context;
+    public NineMensMorrisGame(NineMensMorrisView view) {
         this.view = view;
         this.rules = new NineMenMorrisRules();
+
+        board = new Board();
+        view.initialize(board, this);
+
+        lastTouchedChecker = null;
     }
 
-//    public void init(Checker lastTouchedChecker, List<Checker> checkers,List <Point> points) {
-//        this.lastTouchedChecker = lastTouchedChecker;
-//        this.checkers = checkers;
-//        this.points = points;
-//    }
-
-    public void init(Board board, Checker lastTouchedChecker) {
-        this.board = board;
-        this.lastTouchedChecker = lastTouchedChecker;
-    }
 
     // TODO: make game.newEvent return true or false, if it returns true, that means something changed, so we can invalidate,
     // TODO: don't invalidate if false. this to not do uneccesary redraws on every click
@@ -63,9 +50,9 @@ public class NineMensMorrisGame {
         float y = event.getY();
 //        Toast.makeText(context, "Coordinates: x: " + x + ", y: " + y, Toast.LENGTH_SHORT).show();
 
-        System.out.println("turn " + turn);
         // Phase 1: Placing pieces
-        if(turn < 18) {
+        int turnsLeftFaceOne = rules.getBluemarker() + rules.getBluemarker();
+        if(turnsLeftFaceOne > 0) {
             addMarkerToBoard(x, y);
         }
 
@@ -175,7 +162,7 @@ public class NineMensMorrisGame {
             board.getCheckers().add(newChecker);
 //            checkers.add(newChecker);
             System.out.println("Checkers size: " + board.getCheckers().size());
-            turn++;
+//            turn++;
         }
 
         //TODO implement mill logic, have to create states if we are adding a marker or removing a marker.
@@ -234,5 +221,9 @@ public class NineMensMorrisGame {
 
     public Board getBoard() {
         return this.board;
+    }
+
+    public NineMenMorrisRules getRules() {
+        return rules;
     }
 }
