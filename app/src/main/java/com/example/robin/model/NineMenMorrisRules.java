@@ -44,8 +44,12 @@ public class NineMenMorrisRules implements Parcelable {
 	 * Returns true if a move is successful
 	 */
 	public boolean legalMove(int To, int From, int color) {
+		System.out.println("HELLO");
+
 		if (color == turn) {
+			System.out.println("123 TURN");
 			if (turn == RED_MOVES) {
+				System.out.println("RED TURN");
 				if (redmarker >= 0) {
 //					System.out.println("I don't check if valid move");
 					if (gameplan[To] == EMPTY_SPACE) {
@@ -74,6 +78,7 @@ public class NineMenMorrisRules implements Parcelable {
 					return false;
 				}
 			} else {
+				System.out.println("BLUE TURN");
 				if (bluemarker >= 0) {
 //					System.out.println("I don't check if valid move");
 					if (gameplan[To] == EMPTY_SPACE) {

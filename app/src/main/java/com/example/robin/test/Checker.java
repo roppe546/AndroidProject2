@@ -18,7 +18,9 @@ public class Checker implements Parcelable, Serializable {
 //    private Paint paint;
     private int color;
     private boolean selected;
-    private int onPoint;
+    private int onPoint = -1;
+    private float lastPointX;
+    private float lastPointY;
 
     public Checker() {
     }
@@ -111,5 +113,21 @@ public class Checker implements Parcelable, Serializable {
 
     public void setOnPoint(int onPoint) {
         this.onPoint = onPoint;
+    }
+
+    public float getLastPointX() {
+        return lastPointX;
+    }
+
+    public void setLastPointX(float lastPointX) {
+        this.lastPointX = lastPointX;
+    }
+
+    public float getLastPointY() {
+        return lastPointY;
+    }
+
+    public void setLastPointY(float lastPointY) {
+        this.lastPointY = lastPointY;
     }
 }

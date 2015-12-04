@@ -11,12 +11,15 @@ import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Toast;
 
+import java.sql.SQLOutput;
 import java.util.ArrayList;
+import java.util.List;
 
 import com.example.robin.controller.NineMensMorrisGame;
 import com.example.robin.test.Board;
@@ -197,9 +200,13 @@ public class NineMensMorrisView extends View {
         ArrayList<Checker> checkers = board.getCheckers();
         for (Checker currentChecker : checkers) {
             // Find which point the checker is on
-            Point checkerPoint = board.getPoints().get(currentChecker.getOnPoint() - 1);
-            float pointX = checkerPoint.getX();
-            float pointY = checkerPoint.getY();
+            float pointX = currentChecker.getX();
+            float pointY = currentChecker.getY();
+            if (!currentChecker.isSelected()) {
+                Point checkerPoint = board.getPoints().get(currentChecker.getOnPoint() - 1);
+                pointX = checkerPoint.getX();
+                pointY = checkerPoint.getY();
+            }
 
             currentChecker.setX(pointX);
             currentChecker.setY(pointY);
@@ -260,12 +267,116 @@ public class NineMensMorrisView extends View {
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        game.newEvent(event);
+        int action = event.getAction();
 
-        // TODO: make game.newEvent return true or false, if it returns true, that means something changed, so invalidate, don't invalidate if false
-        // Invalidate to redraw view
+        float x = event.getX();
+        float y = event.getY();
+
+        if (game.getPhase() == 1) {
+            game.addMarkerToBoard(x, y);
+        }
+        // Phase 2
+        else {
+            switch (action) {
+                case (MotionEvent.ACTION_DOWN):
+                case (MotionEvent.ACTION_MOVE):
+                    if (lastTouchedChecker == null) {
+
+                        // Find if checker was clicked
+                        List<Checker> checks = board.getCheckers();
+                        for (Checker current : checks) {
+                            float currentX = current.getX();
+                            float currentY = current.getY();
+                            float radius = current.getRadius();
+
+                            if ((x >= currentX - radius) && (x <= currentX + radius) && (y >= currentY - radius) && (y <= currentY + radius)) {
+                                Log.i("TOUCH", "Touched checker.");
+
+                                // Register checker as touched, so it will move to new position on next touch
+                                lastTouchedChecker = current;
+                                game.setLastTouchedChecker(lastTouchedChecker);
+                                lastTouchedChecker.setSelected(true);
+
+                                // Register its last point
+                                lastTouchedChecker.setLastPointX(currentX);
+                                lastTouchedChecker.setLastPointY(currentY);
+
+                                break;
+                            }
+                        }
+                    }
+
+                    // A checker was previously selected
+                    else {
+//                        System.out.println("last x : " + lastTouchedChecker.getLastPointX());
+//                        System.out.println("last y : " + lastTouchedChecker.getLastPointY());
+
+
+                        float lastTouchedCheckerX = board.getPoints().get(lastTouchedChecker.getOnPoint()).getX();
+                        float lastTouchedCheckerY = board.getPoints().get(lastTouchedChecker.getOnPoint()).getY();
+                        float radius = lastTouchedChecker.getRadius();
+
+
+
+                        // Check if same checker was touched again
+//                        if ((x >= lastTouchedCheckerX - radius) && (x <= lastTouchedCheckerX + radius) && (y >= lastTouchedCheckerY - radius) && (y <= lastTouchedCheckerY + radius)) {
+//
+//                            // Same checker was touched again, unselect it
+//                            Log.i("TOUCH", "Touched same checker, unselect it.");
+//                            lastTouchedChecker.setX(lastTouchedChecker.getLastPointX());
+//                            lastTouchedChecker.setY(lastTouchedChecker.getLastPointY());
+//                            lastTouchedChecker.setSelected(false);
+//                            game.setLastTouchedChecker(null);
+//                            lastTouchedChecker = null;
+//                        }
+
+                        // Move checker to location
+//                        else {
+                            lastTouchedChecker.setX(x);
+                            lastTouchedChecker.setY(y);
+//                        }
+                    }
+
+                    invalidate();
+                    break;
+
+                case (MotionEvent.ACTION_UP):
+                    // check position, update model, ...
+
+                    if (lastTouchedChecker != null) {
+                        System.out.println("NOT NULL");
+                        if (game.moveTo(x, y)) {
+                            game.setLastTouchedChecker(null);
+                            lastTouchedChecker.setSelected(false);
+                            lastTouchedChecker = null;
+                        }
+                        else {
+                            lastTouchedChecker.setX(lastTouchedChecker.getLastPointX());
+                            lastTouchedChecker.setY(lastTouchedChecker.getLastPointY());
+                            game.setLastTouchedChecker(null);
+                            lastTouchedChecker.setSelected(false);
+                            lastTouchedChecker = null;
+                        }
+                    }
+                    else {
+                        System.out.println("NULL");
+                    }
+
+                    break;
+            }
+        }
+
         invalidate();
-        return super.onTouchEvent(event);
+
+
+        return true;
+
+//        game.newEvent(event);
+//
+//        // TODO: make game.newEvent return true or false, if it returns true, that means something changed, so invalidate, don't invalidate if false
+//        // Invalidate to redraw view
+//        invalidate();
+//        return super.onTouchEvent(event);
     }
 
     private void showToast(String string) {

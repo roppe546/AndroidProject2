@@ -14,6 +14,7 @@ import com.example.robin.test.NineMensMorrisView;
 
 import com.example.robin.model.NineMenMorrisRules;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -49,13 +50,13 @@ public class NineMensMorrisGame {
 
     // TODO: make game.newEvent return true or false, if it returns true, that means something changed, so we can invalidate,
     // TODO: don't invalidate if false. this to not do uneccesary redraws on every click
-    public void newEvent(MotionEvent event) {
+    public void newEvent(float x, float y) {
 
         if(isGameOver)
             return;
         // Get touch coordinates
-        float x = event.getX();
-        float y = event.getY();
+//        float x = event.getX();
+//        float y = event.getY();
 
         // Phase 1: Placing pieces
         int turnsLeftFaceOne = rules.getBluemarker() + rules.getBluemarker();
@@ -99,70 +100,136 @@ public class NineMensMorrisGame {
             }
         }
         // No checker previously selected
-         else if (lastTouchedChecker == null) {
+//         else if (lastTouchedChecker == null) {
+//
+//            // Find if checker was clicked
+//            List<Checker> checks = board.getCheckers();
+//            for (Checker current : checks) {
+//                float currentX = current.getX();
+//                float currentY = current.getY();
+//                float radius = current.getRadius();
+//
+//                if ((x >= currentX - radius) && (x <= currentX + radius) && (y >= currentY - radius) && (y <= currentY + radius)) {
+//                    Log.i("TOUCH", "Touched checker.");
+//
+//                    // Register checker as touched, so it will move to new position on next touch
+//                    lastTouchedChecker = current;
+//                    lastTouchedChecker.setSelected(true);
+//
+//                    break;
+//                }
+//            }
+//        }
+//
+//        // A checker was previously selected
+//        else {
+//            float lastTouchedCheckerX = lastTouchedChecker.getX();
+//            float lastTouchedCheckerY = lastTouchedChecker.getY();
+//            float radius = lastTouchedChecker.getRadius();
+//
+//            // Check if same checker was touched again
+//            if ((x >= lastTouchedCheckerX - radius) && (x <= lastTouchedCheckerX + radius) && (y >= lastTouchedCheckerY - radius) && (y <= lastTouchedCheckerY + radius)) {
+//
+//                // Same checker was touched again, unselect it
+//                Log.i("TOUCH", "Touched same checker, unselect it.");
+//                lastTouchedChecker.setSelected(false);
+//                lastTouchedChecker = null;
+//            }
+//
+//            // Move checker to point
+//            else {
+//                Point pointTo = getPoint(x, y);
+//                Point pointFrom = getPoint(lastTouchedCheckerX, lastTouchedCheckerY);
+//
+//                if(pointFrom == null || pointTo == null)
+//                    return;
+//
+//                int nextMove = getMarkerTurn(pointFrom);
+//
+//                boolean isLegal = rules.legalMove(pointTo.getNumber(), pointFrom.getNumber(), nextMove);
+//                if(isLegal) {
+//                    lastTouchedChecker.setX(pointTo.getX());
+//                    lastTouchedChecker.setY(pointTo.getY());
+//
+//                    // Unselect checker
+//                    lastTouchedChecker.setSelected(false);
+//                    lastTouchedChecker.setOnPoint(pointTo.getNumber());
+//                    lastTouchedChecker = null;
+//
+//                    boolean isRemove = rules.remove(pointTo.getNumber());
+//                    if(isRemove) {
+//                        removeChecker = true;
+//                    }
+//                }
+//            }
+//        }
+        updateUI();
+    }
 
-            // Find if checker was clicked
-            List<Checker> checks = board.getCheckers();
-            for (Checker current : checks) {
-                float currentX = current.getX();
-                float currentY = current.getY();
-                float radius = current.getRadius();
+    public boolean moveTo(float x, float y) {
 
-                if ((x >= currentX - radius) && (x <= currentX + radius) && (y >= currentY - radius) && (y <= currentY + radius)) {
-                    Log.i("TOUCH", "Touched checker.");
+        if(isGameOver)
+            return false;
 
-                    // Register checker as touched, so it will move to new position on next touch
-                    lastTouchedChecker = current;
-                    lastTouchedChecker.setSelected(true);
+        Point pointTo = getPoint(x, y);
+        Point pointFrom = getPoint(lastTouchedChecker.getLastPointX(), lastTouchedChecker.getLastPointY());
 
-                    break;
+        if(pointFrom == null || pointTo == null)
+            return false;
+
+        System.out.println("from point number: " + pointFrom.getNumber());
+        System.out.println("to point number: " + pointTo.getNumber());
+
+        if (removeChecker) {
+            boolean isLegalRemove = rules.remove(pointTo.getNumber(), rules.getTurn() + 3);
+            if (isLegalRemove) {
+                int index = getCheckerOnPoint(pointTo);
+                board.getCheckers().remove(index);
+                removeChecker = false;
+
+                // Checking if we have a winner.
+                if (rules.lose(NineMenMorrisRules.BLUE_MARKER)) {
+                    System.out.println("Red have < 3 checker's. Blue wins!");
+                    activity.updateUI("Blue wins!");
+                    isGameOver = true;
+                    Toast.makeText(activity.getApplicationContext(), "Red have < 3 checker's. Blue wins!", Toast.LENGTH_LONG).show();
+                    return true;
                 }
+                else if (rules.lose(NineMenMorrisRules.RED_MARKER)) {
+                    System.out.println("Blue have < 3 checker's. Red wins!");
+                    activity.updateUI("Red wins!");
+                    isGameOver = true;
+                    Toast.makeText(activity.getApplicationContext(), "Blue have < 3 checker's. Red wins!", Toast.LENGTH_LONG).show();
+                    return true;
+                }
+                updateUI();
+                return true;
             }
         }
 
-        // A checker was previously selected
-        else {
-            float lastTouchedCheckerX = lastTouchedChecker.getX();
-            float lastTouchedCheckerY = lastTouchedChecker.getY();
-            float radius = lastTouchedChecker.getRadius();
+        int nextMove = getMarkerTurn(pointFrom);
+        
+        boolean isLegal = rules.legalMove(pointTo.getNumber(), pointFrom.getNumber(), nextMove);
 
-            // Check if same checker was touched again
-            if ((x >= lastTouchedCheckerX - radius) && (x <= lastTouchedCheckerX + radius) && (y >= lastTouchedCheckerY - radius) && (y <= lastTouchedCheckerY + radius)) {
+        System.out.println("next move: " + nextMove);
+        System.out.println("isLegal: " + isLegal);
 
-                // Same checker was touched again, unselect it
-                Log.i("TOUCH", "Touched same checker, unselect it.");
-                lastTouchedChecker.setSelected(false);
-                lastTouchedChecker = null;
-            }
+        if(isLegal) {
+            lastTouchedChecker.setX(pointTo.getX());
+            lastTouchedChecker.setY(pointTo.getY());
 
-            // Move checker to point
-            else {
-                Point pointTo = getPoint(x, y);
-                Point pointFrom = getPoint(lastTouchedCheckerX, lastTouchedCheckerY);
+            // Unselect checker
+            lastTouchedChecker.setSelected(false);
+            lastTouchedChecker.setOnPoint(pointTo.getNumber());
+            lastTouchedChecker = null;
 
-                if(pointFrom == null || pointTo == null)
-                    return;
-
-                int nextMove = getMarkerTurn(pointFrom);
-
-                boolean isLegal = rules.legalMove(pointTo.getNumber(), pointFrom.getNumber(), nextMove);
-                if(isLegal) {
-                    lastTouchedChecker.setX(pointTo.getX());
-                    lastTouchedChecker.setY(pointTo.getY());
-
-                    // Unselect checker
-                    lastTouchedChecker.setSelected(false);
-                    lastTouchedChecker.setOnPoint(pointTo.getNumber());
-                    lastTouchedChecker = null;
-
-                    boolean isRemove = rules.remove(pointTo.getNumber());
-                    if(isRemove) {
-                        removeChecker = true;
-                    }
-                }
+            boolean isRemove = rules.remove(pointTo.getNumber());
+            if(isRemove) {
+                removeChecker = true;
             }
         }
         updateUI();
+        return true;
     }
 
     public void updateUI() {
@@ -183,7 +250,7 @@ public class NineMensMorrisGame {
         activity.updateUI(str);
     }
 
-    private void addMarkerToBoard(float x, float y) {
+    public void addMarkerToBoard(float x, float y) {
 
         Point p = getPoint(x, y);
         if(p == null)
@@ -218,8 +285,8 @@ public class NineMensMorrisGame {
 
         Point returnPoint = null;
 
-        List<Point> pointss = board.getPoints();
-        for(Point p: pointss) {
+        List<Point> points = board.getPoints();
+        for(Point p: points) {
 
             float currentPointRadius = p.getRadius() * 2;
             float currentX = p.getX();
@@ -238,7 +305,7 @@ public class NineMensMorrisGame {
         int returnIndex = 0;
         for (int i = 0; i < board.getCheckers().size(); i++) {
             Checker currentChecker = board.getCheckers().get(i);
-            if (point.getX() == currentChecker.getX() && point.getY() == currentChecker.getY()) {
+            if (point.getX() == currentChecker.getLastPointX() && point.getY() == currentChecker.getLastPointY()) {
                 returnIndex = i;
                 break;
             }
@@ -267,13 +334,36 @@ public class NineMensMorrisGame {
 
         if (board.getCheckers().get(index).getColor() == Color.RED) {
 //        if(paint.getColor() == Color.RED) {
+            System.out.println("BLUE MOVES");
             return NineMenMorrisRules.BLUE_MOVES;
         }
 
+        System.out.println("RED MOVES");
         return NineMenMorrisRules.RED_MOVES;
     }
 
     public NineMenMorrisRules getRules() {
         return rules;
+    }
+
+    public int getPhase() {
+        int turnsLeftPhaseOne = rules.getBluemarker() + rules.getBluemarker();
+
+        if(turnsLeftPhaseOne >= 0) {
+            return 1;
+        }
+        return 2;
+    }
+
+    public boolean ifRemove() {
+        return removeChecker;
+    }
+
+    public Checker getLastTouchedChecker() {
+        return lastTouchedChecker;
+    }
+
+    public void setLastTouchedChecker(Checker lastTouchedChecker) {
+        this.lastTouchedChecker = lastTouchedChecker;
     }
 }
