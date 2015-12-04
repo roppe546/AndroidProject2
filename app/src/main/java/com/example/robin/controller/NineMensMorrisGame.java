@@ -215,6 +215,7 @@ public class NineMensMorrisGame {
         System.out.println("isLegal: " + isLegal);
 
         if(isLegal) {
+            lastTouchedChecker.setOnPoint(pointTo.getNumber());
             lastTouchedChecker.setX(pointTo.getX());
             lastTouchedChecker.setY(pointTo.getY());
 
@@ -258,11 +259,13 @@ public class NineMensMorrisGame {
 
         // Removing if we got mill
         if(removeChecker) {
+            System.out.println("point to remove: " + p.getNumber());
             boolean isLegalRemove = rules.remove(p.getNumber(), rules.getTurn() + 3);
             if(isLegalRemove) {
-                int index = getCheckerOnPoint(p);
+                int index = getCheckerOnPointPhaseOne(p);
                 board.getCheckers().remove(index);
                 removeChecker = false;
+                updateUI();
                 return;
             }
         }
@@ -279,6 +282,24 @@ public class NineMensMorrisGame {
         if(isRemove) {
             removeChecker = true;
         }
+        updateUI();
+    }
+
+    private int getCheckerOnPointPhaseOne(Point point) {
+//        System.out.println("LAST POINT getCheckerOnPoint: x = " + point.getX() + ", y = " + point.getY());
+
+        int returnIndex = -1;
+        for (int i = 0; i < board.getCheckers().size(); i++) {
+            Checker currentChecker = board.getCheckers().get(i);
+//            System.out.println("currentChecker x = " + currentChecker.getLastPointX() + ", y = " + currentChecker.getLastPointY());
+            if (((int) point.getX() == (int) currentChecker.getX()) && ((int) point.getY() == (int)currentChecker.getY())) {
+                System.out.println("FOUND");
+                returnIndex = i;
+                break;
+            }
+        }
+        System.out.println("index: " + returnIndex);
+        return returnIndex;
     }
 
     private Point getPoint(float x, float y) {
@@ -301,16 +322,19 @@ public class NineMensMorrisGame {
     }
 
     private int getCheckerOnPoint(Point point) {
+        System.out.println("LAST POINT getCheckerOnPoint: x = " + point.getX() + ", y = " + point.getY());
 
-        int returnIndex = 0;
+        int returnIndex = -1;
         for (int i = 0; i < board.getCheckers().size(); i++) {
             Checker currentChecker = board.getCheckers().get(i);
-            if (point.getX() == currentChecker.getLastPointX() && point.getY() == currentChecker.getLastPointY()) {
+            System.out.println("currentChecker x = " + currentChecker.getLastPointX() + ", y = " + currentChecker.getLastPointY());
+            if (((int) point.getX() == (int) currentChecker.getLastPointX()) && ((int) point.getY() == (int)currentChecker.getLastPointY())) {
+                System.out.println("FOUND");
                 returnIndex = i;
                 break;
             }
         }
-
+        System.out.println("index: " + returnIndex);
         return returnIndex;
     }
 
@@ -327,10 +351,17 @@ public class NineMensMorrisGame {
         return this.board;
     }
 
+    /**
+     * returns the color in gameRules representation of the checker the user is trying to move.
+     * @param point
+     * @return
+     */
     private int getMarkerTurn(Point point) {
 
         int index = getCheckerOnPoint(point);
 //        Paint paint = board.getCheckers().get(index).getPaint();
+
+        System.out.println("point number: " + board.getCheckers().get(index).getOnPoint());
 
         if (board.getCheckers().get(index).getColor() == Color.RED) {
 //        if(paint.getColor() == Color.RED) {
